@@ -808,7 +808,7 @@
 <div class="toast" id="toast"></div>
 
 <!-- Google Sign-In SDK -->
-<script src="https://accounts.google.com/gsi/client" async></script>
+<script src="https://accounts.google.com/gsi/client"></script>
 
 <script>
 // ─── STATE ──────────────────────────────────────────────────────────────────
@@ -852,6 +852,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ─── AUTH ─────────────────────────────────────────────────────────────────────
 function startSignIn() {
+  if (typeof google === 'undefined') { showToast('Google SDK not loaded — check your internet connection and refresh'); return; }
   const clientId = document.getElementById('client-id-input').value.trim();
   const anthropicKey = document.getElementById('anthropic-key-input').value.trim();
 
