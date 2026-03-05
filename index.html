@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MorningDigest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0d;
+    --paper: #f5f0e8;
+    --cream: #ede7d9;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --rust: #b85c38;
+    --sage: #5a7a62;
+    --muted: #7a7167;
+    --rule: #d4cbbf;
+    --white: #fdfaf5;
+    --shadow: 0 2px 12px rgba(15,14,13,0.08);
+    --shadow-lg: 0 8px 32px rgba(15,14,13,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    border-bottom: 3px solid var(--gold);
+  }
+  .masthead-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+  }
+  .masthead-title span { color: var(--gold); }
+  .masthead-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .masthead-actions { display: flex; gap: 10px; align-items: center; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border: 1.5px solid currentColor;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+  }
+  .btn-ghost { color: var(--paper); }
+  .btn-ghost:hover { background: rgba(245,240,232,0.12); }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+    font-weight: 500;
+  }
+  .btn-primary:hover { background: #b8973d; border-color: #b8973d; }
+  .btn-ink {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .btn-ink:hover { background: #2a2926; }
+  .btn-danger { color: var(--rust); border-color: var(--rust); }
+  .btn-danger:hover { background: var(--rust); color: white; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-sm { padding: 4px 10px; font-size: 10px; }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── LANDING ── */
+  #landing {
+    min-height: calc(100vh - 56px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+  }
+  .landing-kicker {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .landing-headline {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    text-align: center;
+    line-height: 1.1;
+    max-width: 640px;
+    margin-bottom: 16px;
+  }
+  .landing-headline em { color: var(--gold); font-style: italic; }
+  .landing-sub {
+    color: var(--muted);
+    font-size: 15px;
+    text-align: center;
+    max-width: 440px;
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+  .landing-card {
+    background: var(--white);
+    border: 1.5px solid var(--rule);
+    border-radius: 4px;
+    padding: 40px 48px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+  }
+  .landing-card h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  .landing-card p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* Setup steps */
+  .steps { margin-bottom: 32px; }
+  .step {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 500;
+    min-width: 20px;
+    padding-top: 1px;
+  }
+  .step-text { font-size: 13px; color: var(--ink); line-height: 1.5; }
+  .step-text strong { font-weight: 500; }
+  .step-text a { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold-light); }
+  .step-text a:hover { border-color: var(--gold); }
+
+  /* Input group */
+  .input-group { margin-bottom: 20px; }
+  .input-group label {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .input-group input, .input-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--rule);
+    background: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .input-group input:focus, .input-group textarea:focus { border-color: var(--gold); }
+  .input-group textarea { resize: vertical; min-height: 60px; }
+
+  .sign-in-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .notice {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  /* ── DASHBOARD ── */
+  #dashboard { display: none; }
+  #dashboard.active { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 56px); }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--white);
+    border-right: 1.5px solid var(--rule);
+    padding: 28px 0;
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-section {
+    padding: 0 20px;
+    margin-bottom: 28px;
+  }
+  .sidebar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* Stats */
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    line-height: 1;
+    display: block;
+  }
+  .stat-label { font-size: 10px; color: var(--muted); margin-top: 2px; display: block; }
+  .stat-box.highlight { background: var(--ink); border-color: var(--ink); }
+  .stat-box.highlight .stat-num { color: var(--gold); }
+  .stat-box.highlight .stat-label { color: rgba(245,240,232,0.5); }
+
+  /* Nav filters */
+  .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.12s;
+    margin-bottom: 2px;
+    font-size: 13px;
+  }
+  .nav-item:hover { background: var(--cream); }
+  .nav-item.active { background: var(--ink); color: var(--paper); }
+  .nav-item.active .nav-count { background: var(--gold); color: var(--ink); }
+  .nav-left { display: flex; align-items: center; gap: 8px; }
+  .nav-icon { font-size: 14px; }
+  .nav-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-weight: 500;
+  }
+
+  /* Sidebar bottom */
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px 20px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Main content */
+  .main {
+    background: var(--paper);
+    padding: 32px;
+    overflow-y: auto;
+  }
+  .main-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1.5px solid var(--rule);
+  }
+  .main-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+  }
+  .main-actions { display: flex; gap: 10px; align-items: center; }
+
+  /* Digest banner */
+  .digest-banner {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 3px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    border-left: 4px solid var(--gold);
+  }
+  .digest-banner.loading { opacity: 0.7; }
+  .digest-content { flex: 1; }
+  .digest-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .digest-text {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.9);
+  }
+  .digest-text strong { color: var(--paper); }
+  .digest-actions { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+  .digest-spinner {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spin { display: inline-block; animation: spin 1s linear infinite; }
+
+  /* Email list */
+  .email-list { display: flex; flex-direction: column; gap: 0; }
+  .email-item {
+    background: var(--white);
+    border: 1.5px solid var(--rule);
+    border-radius: 3px;
+    padding: 18px 22px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .email-item:hover { border-color: var(--gold-light); box-shadow: var(--shadow); transform: translateY(-1px); }
+  .email-item.expanded { border-color: var(--gold); }
+  .email-item.unread::before {
+    content: '';
+    position: absolute;
+    left: -1.5px; top: -1.5px; bottom: -1.5px;
+    width: 3px;
+    background: var(--gold);
+    border-radius: 3px 0 0 3px;
+  }
+
+  .email-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .email-meta { flex: 1; min-width: 0; }
+  .email-from {
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .email-subject {
+    font-size: 13px;
+    color: var(--ink);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .email-item.unread .email-subject { font-weight: 500; }
+  .email-snippet { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .email-aside { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+  .email-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .email-tags { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .tag-reply { background: #fff0ec; color: var(--rust); }
+  .tag-read { background: #eef4f0; color: var(--sage); }
+  .tag-fyi { background: #f5f0e8; color: var(--muted); border: 1px solid var(--rule); }
+  .tag-watched { background: #fdf7e8; color: #8a6d1a; }
+
+  /* Expanded email */
+  .email-expanded {
+    display: none;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+  .email-item.expanded .email-expanded { display: block; }
+
+  .ai-summary {
+    background: var(--paper);
+    border: 1px solid var(--gold-light);
+    border-radius: 3px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+  }
+  .ai-summary-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ai-summary-text { font-size: 13px; line-height: 1.65; color: var(--ink); }
+  .ai-summary-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .email-body-preview {
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-height: 120px;
+    overflow: hidden;
+    position: relative;
+  }
+  .email-body-preview::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(transparent, var(--white));
+  }
+
+  .open-gmail-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .open-gmail-link:hover { color: var(--rust); }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 80px 32px;
+    color: var(--muted);
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 16px; }
+  .empty-state h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .empty-state p { font-size: 13px; line-height: 1.6; }
+
+  /* Settings modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,14,13,0.6);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--white);
+    border: 1.5px solid var(--rule);
+    border-radius: 4px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+  }
+  .modal-header {
+    padding: 20px 24px;
+    border-bottom: 1.5px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-header h3 { font-family: 'Instrument Serif', serif; font-size: 18px; }
+  .modal-close {
+    background: none; border: none; cursor: pointer;
+    font-size: 18px; color: var(--muted); padding: 4px;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal-body { padding: 24px; }
+  .modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  /* Tag list */
+  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--cream);
+    border-radius: 2px;
+    padding: 3px 8px 3px 10px;
+    font-size: 12px;
+  }
+  .tag-remove {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 14px; padding: 0; line-height: 1;
+  }
+  .tag-remove:hover { color: var(--rust); }
+  .tag-input-row { display: flex; gap: 8px; margin-top: 8px; }
+  .tag-input-row input {
+    flex: 1;
+    padding: 7px 12px;
+    border: 1.5px solid var(--rule);
+    background: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    border-radius: 2px;
+    outline: none;
+  }
+  .tag-input-row input:focus { border-color: var(--gold); }
+
+  /* Loading bar */
+  .loading-bar {
+    height: 2px;
+    background: var(--rule);
+    border-radius: 1px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .loading-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 1px;
+    animation: loadingPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes loadingPulse {
+    0% { width: 0%; margin-left: 0; }
+    50% { width: 70%; margin-left: 15%; }
+    100% { width: 0%; margin-left: 100%; }
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 18px;
+    border-radius: 3px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    z-index: 200;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.2s;
+    pointer-events: none;
+    border-left: 3px solid var(--gold);
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  @media (max-width: 720px) {
+    #dashboard.active { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 20px 16px; }
+    .landing-card { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-title">Morning<span>Digest</span></div>
+  <div class="masthead-date" id="masthead-date"></div>
+  <div class="masthead-actions" id="masthead-actions">
+    <!-- populated by JS -->
+  </div>
+</header>
+
+<!-- LANDING PAGE -->
+<div id="landing" class="page active">
+  <p class="landing-kicker">✦ Inbox Intelligence</p>
+  <h1 class="landing-headline">Your inbox, <em>distilled</em><br>every morning.</h1>
+  <p class="landing-sub">Surface what matters, skip the noise. AI-powered summaries and smart categorization for your Gmail inbox.</p>
+
+  <div class="landing-card">
+    <h3>Connect your Gmail</h3>
+    <p>MorningDigest uses Gmail read-only access. Your emails are processed locally and never stored on any server.</p>
+
+    <details style="margin-bottom:24px;">
+      <summary style="cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Gmail API Setup Instructions</summary>
+      <div class="steps" style="margin-top:12px;">
+        <div class="step"><div class="step-num">01</div><div class="step-text">Go to <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a> → Create a new project</div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-text">Enable the <strong>Gmail API</strong> for your project under APIs & Services</div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-text">Create <strong>OAuth 2.0 credentials</strong> (Web Application type) and add this page's URL as an authorized JavaScript origin</div></div>
+        <div class="step"><div class="step-num">04</div><div class="step-text">Paste your <strong>Client ID</strong> below and click Sign In</div></div>
+      </div>
+    </details>
+
+    <div class="input-group">
+      <label>Google OAuth Client ID</label>
+      <input type="text" id="client-id-input" placeholder="xxxxxxxxxxxx.apps.googleusercontent.com">
+    </div>
+
+    <div class="input-group">
+      <label>Anthropic API Key <span style="color:var(--muted);font-size:10px;font-weight:300;">(optional — for AI summaries)</span></label>
+      <input type="password" id="anthropic-key-input" placeholder="sk-ant-...">
+    </div>
+
+    <div class="sign-in-row">
+      <button class="btn btn-primary" onclick="startSignIn()">Sign in with Google →</button>
+      <button class="btn btn-ghost" style="color:var(--muted);border-color:var(--rule);" onclick="loadDemo()">Try demo</button>
+    </div>
+    <p class="notice">Gmail read-only access only. AI summaries use your Anthropic key — calls are made directly from your browser.</p>
+  </div>
+</div>
+
+<!-- DASHBOARD PAGE -->
+<div id="dashboard" class="page">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Overview</div>
+      <div class="stat-grid">
+        <div class="stat-box highlight"><span class="stat-num" id="stat-total">0</span><span class="stat-label">Flagged</span></div>
+        <div class="stat-box"><span class="stat-num" id="stat-unread">0</span><span class="stat-label">Unread</span></div>
+        <div class="stat-box"><span class="stat-num" id="stat-reply">0</span><span class="stat-label">Reply</span></div>
+        <div class="stat-box"><span class="stat-num" id="stat-fyi">0</span><span class="stat-label">FYI</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Filter</div>
+      <div class="nav-item active" data-filter="all" onclick="setFilter('all', this)">
+        <div class="nav-left"><span class="nav-icon">📥</span> All Important</div>
+        <span class="nav-count" id="nav-all">0</span>
+      </div>
+      <div class="nav-item" data-filter="reply" onclick="setFilter('reply', this)">
+        <div class="nav-left"><span class="nav-icon">↩</span> Needs Reply</div>
+        <span class="nav-count" id="nav-reply">0</span>
+      </div>
+      <div class="nav-item" data-filter="read" onclick="setFilter('read', this)">
+        <div class="nav-left"><span class="nav-icon">👁</span> Needs Reading</div>
+        <span class="nav-count" id="nav-read">0</span>
+      </div>
+      <div class="nav-item" data-filter="fyi" onclick="setFilter('fyi', this)">
+        <div class="nav-left"><span class="nav-icon">💡</span> FYI / CC'd</div>
+        <span class="nav-count" id="nav-fyi">0</span>
+      </div>
+      <div class="nav-item" data-filter="watched" onclick="setFilter('watched', this)">
+        <div class="nav-left"><span class="nav-icon">⭐</span> Watched</div>
+        <span class="nav-count" id="nav-watched">0</span>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="btn btn-ghost btn-sm" style="color:var(--muted);border-color:var(--rule);" onclick="openSettings()">⚙ Settings</button>
+      <button class="btn btn-danger btn-sm" onclick="signOut()">Sign Out</button>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="main-header">
+      <h2 class="main-title" id="main-title">All Important</h2>
+      <div class="main-actions">
+        <button class="btn btn-primary" id="refresh-btn" onclick="refreshEmails()">↻ Refresh</button>
+        <button class="btn btn-ink btn-sm" id="digest-btn" onclick="generateDigest()" style="display:none;">✦ AI Digest</button>
+      </div>
+    </div>
+
+    <div id="loading-bar" class="loading-bar" style="display:none;"><div class="loading-bar-fill"></div></div>
+
+    <div id="digest-section" style="display:none;">
+      <div class="digest-banner" id="digest-banner">
+        <div class="digest-content">
+          <span class="digest-label">✦ AI Morning Digest</span>
+          <div class="digest-text" id="digest-text">Generating your digest…</div>
+        </div>
+        <div class="digest-actions">
+          <button class="btn btn-ghost btn-sm" onclick="copyDigest()">Copy</button>
+          <button class="btn btn-ghost btn-sm" onclick="closeDigest()">✕</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="email-list" class="email-list">
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3>No emails loaded yet</h3>
+        <p>Click Refresh to fetch and analyze your inbox.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Settings</h3>
+      <button class="modal-close" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="input-group">
+        <label>Anthropic API Key</label>
+        <input type="password" id="settings-anthropic-key" placeholder="sk-ant-...">
+        <p style="font-size:11px;color:var(--muted);margin-top:6px;">Used for AI summaries. Calls made directly from your browser.</p>
+      </div>
+
+      <div class="input-group">
+        <label>Watched Senders</label>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">Emails from these senders are always shown first.</p>
+        <div class="tag-list" id="sender-tags"></div>
+        <div class="tag-input-row">
+          <input type="text" id="sender-input" placeholder="boss@company.com" onkeydown="if(event.key==='Enter')addSender()">
+          <button class="btn btn-ink btn-sm" onclick="addSender()">Add</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Keywords to Track</label>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">Emails containing these words are flagged.</p>
+        <div class="tag-list" id="keyword-tags"></div>
+        <div class="tag-input-row">
+          <input type="text" id="keyword-input" placeholder="urgent, invoice, deadline" onkeydown="if(event.key==='Enter')addKeyword()">
+          <button class="btn btn-ink btn-sm" onclick="addKeyword()">Add</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Max emails to fetch</label>
+        <input type="number" id="settings-max-emails" value="50" min="10" max="200" style="width:120px;">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" style="color:var(--muted);border-color:var(--rule);" onclick="closeSettings()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveSettings()">Save & Refresh</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Google Sign-In SDK -->
+<script src="https://accounts.google.com/gsi/client" async></script>
+
+<script>
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let state = {
+  accessToken: null,
+  emails: [],
+  currentFilter: 'all',
+  settings: {
+    watchedSenders: [],
+    keywords: [],
+    maxEmails: 50,
+    anthropicKey: ''
+  },
+  digestText: '',
+  isDemo: false
+};
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Set date
+  const now = new Date();
+  document.getElementById('masthead-date').textContent =
+    now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
+  // Load saved settings
+  try {
+    const saved = JSON.parse(localStorage.getItem('md_settings') || '{}');
+    Object.assign(state.settings, saved);
+    if (saved.clientId) document.getElementById('client-id-input').value = saved.clientId;
+    if (saved.anthropicKey) document.getElementById('anthropic-key-input').value = saved.anthropicKey;
+  } catch(e) {}
+
+  // Auto-restore session
+  const savedToken = sessionStorage.getItem('md_token');
+  if (savedToken) {
+    state.accessToken = savedToken;
+    showDashboard();
+    refreshEmails();
+  }
+});
+
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+function startSignIn() {
+  const clientId = document.getElementById('client-id-input').value.trim();
+  const anthropicKey = document.getElementById('anthropic-key-input').value.trim();
+
+  if (!clientId) { showToast('Please enter your Google Client ID'); return; }
+
+  // Save inputs
+  const settings = JSON.parse(localStorage.getItem('md_settings') || '{}');
+  settings.clientId = clientId;
+  if (anthropicKey) settings.anthropicKey = anthropicKey;
+  localStorage.setItem('md_settings', JSON.stringify(settings));
+  state.settings.anthropicKey = anthropicKey;
+
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id: clientId,
+    scope: 'https://www.googleapis.com/auth/gmail.readonly',
+    callback: (response) => {
+      if (response.access_token) {
+        state.accessToken = response.access_token;
+        sessionStorage.setItem('md_token', response.access_token);
+        showDashboard();
+        refreshEmails();
+      } else {
+        showToast('Sign-in failed. Check your Client ID.');
+      }
+    }
+  });
+  client.requestAccessToken();
+}
+
+function signOut() {
+  state.accessToken = null;
+  state.emails = [];
+  state.isDemo = false;
+  sessionStorage.removeItem('md_token');
+  showPage('landing');
+  updateMastheadActions(false);
+  showToast('Signed out');
+}
+
+// ─── DEMO MODE ───────────────────────────────────────────────────────────────
+function loadDemo() {
+  state.isDemo = true;
+  state.emails = generateDemoEmails();
+  showDashboard();
+  renderEmails();
+  updateStats();
+  showToast('Demo mode — showing sample emails');
+}
+
+function generateDemoEmails() {
+  return [
+    {
+      id: 'demo1', threadId: 'thread1',
+      from: 'Sarah Chen <sarah@acmecorp.com>', fromName: 'Sarah Chen',
+      subject: 'Q3 budget review — action needed by Friday',
+      snippet: 'Hi, I wanted to follow up on the Q3 budget figures we discussed last week. We need sign-off before the board meeting.',
+      body: 'Hi,\n\nI wanted to follow up on the Q3 budget figures we discussed last week. We need sign-off before the board meeting on Friday at 2pm.\n\nKey items requiring approval:\n- Marketing overspend: $42,000\n- New hire headcount (2 engineers)\n- Software license renewals\n\nCan you review the attached spreadsheet and reply with your approval or any concerns?\n\nBest,\nSarah',
+      date: new Date(Date.now() - 2*3600000),
+      isUnread: true, category: 'reply', isWatched: true, labels: ['INBOX', 'IMPORTANT']
+    },
+    {
+      id: 'demo2', threadId: 'thread2',
+      from: 'GitHub <noreply@github.com>', fromName: 'GitHub',
+      subject: '[acme/webapp] PR #234: Add dark mode support',
+      snippet: 'A new pull request has been opened by devteam. Review requested.',
+      body: 'A new pull request has been opened.\n\nTitle: Add dark mode support\nBranch: feature/dark-mode → main\nReview requested from you\n\nView on GitHub →',
+      date: new Date(Date.now() - 4*3600000),
+      isUnread: true, category: 'reply', isWatched: false, labels: ['INBOX']
+    },
+    {
+      id: 'demo3', threadId: 'thread3',
+      from: 'Marcus Johnson <marcus@partner.io>', fromName: 'Marcus Johnson',
+      subject: 'Partnership proposal — revised terms attached',
+      snippet: 'Thanks for the call yesterday. I\'ve revised the partnership agreement based on your feedback.',
+      body: 'Thanks for the call yesterday. I\'ve revised the partnership agreement based on your feedback and attached the updated document.\n\nMain changes:\n- Revenue share adjusted to 70/30\n- Exclusivity clause removed\n- 6-month trial period added\n\nLet me know if you\'d like to schedule a follow-up call this week.',
+      date: new Date(Date.now() - 6*3600000),
+      isUnread: true, category: 'read', isWatched: false, labels: ['INBOX', 'IMPORTANT']
+    },
+    {
+      id: 'demo4', threadId: 'thread4',
+      from: 'Stripe <notifications@stripe.com>', fromName: 'Stripe',
+      subject: 'Your invoice for $2,840 is ready',
+      snippet: 'Invoice #INV-2024-0934 for $2,840.00 is due on December 15.',
+      body: 'Invoice #INV-2024-0934\nAmount: $2,840.00\nDue: December 15, 2024\n\nView and pay invoice →',
+      date: new Date(Date.now() - 8*3600000),
+      isUnread: true, category: 'read', isWatched: false, labels: ['INBOX']
+    },
+    {
+      id: 'demo5', threadId: 'thread5',
+      from: 'Team Updates <updates@acmecorp.com>', fromName: 'Team Updates',
+      subject: 'Weekly engineering standup notes — Nov 25',
+      snippet: 'Notes from today\'s standup. Sprint velocity: 42 points. 3 items blocked.',
+      body: 'Standup notes for Nov 25:\n\nCompleted: User auth refactor, API rate limiting\nIn Progress: Dark mode, Performance audit\nBlocked: Waiting on design assets for onboarding flow\n\nSprint velocity: 42 points (target: 40)\nNext standup: Monday 9am',
+      date: new Date(Date.now() - 24*3600000),
+      isUnread: false, category: 'fyi', isWatched: false, labels: ['INBOX']
+    },
+    {
+      id: 'demo6', threadId: 'thread6',
+      from: 'Lena Park <lena@designco.com>', fromName: 'Lena Park',
+      subject: 'Final brand assets — download link inside',
+      snippet: 'The final brand guide and asset pack are ready for download. Link expires in 7 days.',
+      body: 'Hi,\n\nThe final brand assets are ready! Everything is packaged at the link below.\n\nIncludes: Logo files (SVG, PNG, dark/light), Color palette, Typography guide, Icon set\n\nDownload link (expires Dec 2): [link]\n\nLet me know if you need any adjustments.',
+      date: new Date(Date.now() - 30*3600000),
+      isUnread: true, category: 'read', isWatched: false, labels: ['INBOX', 'IMPORTANT']
+    },
+  ];
+}
+
+// ─── GMAIL API ────────────────────────────────────────────────────────────────
+async function refreshEmails() {
+  if (state.isDemo) { renderEmails(); updateStats(); return; }
+  if (!state.accessToken) return;
+
+  setLoading(true);
+  document.getElementById('refresh-btn').disabled = true;
+  showToast('Fetching inbox…');
+
+  try {
+    const maxEmails = state.settings.maxEmails || 50;
+    const resp = await fetch(
+      `https://www.googleapis.com/gmail/v1/users/me/messages?maxResults=${maxEmails}&labelIds=INBOX`,
+      { headers: { Authorization: `Bearer ${state.accessToken}` } }
+    );
+
+    if (resp.status === 401) { showToast('Session expired — please sign in again'); signOut(); return; }
+    if (!resp.ok) throw new Error(`Gmail API error ${resp.status}`);
+
+    const data = await resp.json();
+    const messages = data.messages || [];
+
+    // Fetch each message in parallel (batched)
+    const emails = await Promise.all(
+      messages.map(m => fetchMessage(m.id))
+    );
+
+    state.emails = emails.filter(Boolean).map(parseEmail);
+    renderEmails();
+    updateStats();
+    showToast(`Loaded ${state.emails.length} emails`);
+  } catch(e) {
+    showToast('Error fetching emails: ' + e.message);
+    console.error(e);
+  } finally {
+    setLoading(false);
+    document.getElementById('refresh-btn').disabled = false;
+  }
+}
+
+async function fetchMessage(id) {
+  try {
+    const resp = await fetch(
+      `https://www.googleapis.com/gmail/v1/users/me/messages/${id}?format=full`,
+      { headers: { Authorization: `Bearer ${state.accessToken}` } }
+    );
+    return resp.ok ? await resp.json() : null;
+  } catch { return null; }
+}
+
+function parseEmail(msg) {
+  const headers = msg.payload?.headers || [];
+  const get = (name) => headers.find(h => h.name.toLowerCase() === name.toLowerCase())?.value || '';
+
+  const from = get('From');
+  const fromName = from.replace(/<.*>/, '').replace(/"/g, '').trim() || from;
+  const subject = get('Subject') || '(no subject)';
+  const dateStr = get('Date');
+  const date = dateStr ? new Date(dateStr) : new Date();
+
+  // Extract body
+  let body = '';
+  const extractBody = (part) => {
+    if (part.mimeType === 'text/plain' && part.body?.data) {
+      body = atob(part.body.data.replace(/-/g, '+').replace(/_/g, '/'));
+    }
+    if (part.parts) part.parts.forEach(extractBody);
+  };
+  extractBody(msg.payload);
+
+  const labels = msg.labelIds || [];
+  const isUnread = labels.includes('UNREAD');
+  const isImportant = labels.includes('IMPORTANT') || labels.includes('STARRED');
+
+  // Categorize
+  const category = categorizeEmail(from, subject, body, labels, isUnread);
+  const isWatched = isWatchedEmail(from, subject, body);
+
+  return {
+    id: msg.id,
+    threadId: msg.threadId,
+    from, fromName,
+    subject,
+    snippet: msg.snippet || '',
+    body: body.slice(0, 2000),
+    date,
+    isUnread,
+    isImportant,
+    category,
+    isWatched,
+    labels,
+    aiSummary: null
+  };
+}
+
+function categorizeEmail(from, subject, body, labels, isUnread) {
+  const text = (subject + ' ' + body).toLowerCase();
+  const replyWords = ['action required', 'please review', 'approval needed', 'your input', 'can you', 'could you', 'please respond', 'deadline', 'urgent', 'asap', 'lgtm?', 'sign-off'];
+  const fyiWords = ['fyi', 'for your information', 'looping you in', 'keeping you in the loop', 'cc:', 'heads up', 'just wanted to share'];
+
+  if (replyWords.some(w => text.includes(w))) return 'reply';
+  if (fyiWords.some(w => text.includes(w))) return 'fyi';
+  if (!isUnread) return 'fyi';
+  return 'read';
+}
+
+function isWatchedEmail(from, subject, body) {
+  const { watchedSenders, keywords } = state.settings;
+  if (watchedSenders.some(s => from.toLowerCase().includes(s.toLowerCase()))) return true;
+  const text = (subject + ' ' + body).toLowerCase();
+  if (keywords.some(k => text.includes(k.toLowerCase()))) return true;
+  return false;
+}
+
+// ─── RENDERING ────────────────────────────────────────────────────────────────
+function getFilteredEmails() {
+  const f = state.currentFilter;
+  return state.emails.filter(e => {
+    if (f === 'all') return true;
+    if (f === 'reply') return e.category === 'reply';
+    if (f === 'read') return e.category === 'read' && e.isUnread;
+    if (f === 'fyi') return e.category === 'fyi';
+    if (f === 'watched') return e.isWatched;
+    return true;
+  }).sort((a, b) => {
+    if (a.isWatched && !b.isWatched) return -1;
+    if (!a.isWatched && b.isWatched) return 1;
+    if (a.category === 'reply' && b.category !== 'reply') return -1;
+    if (a.category !== 'reply' && b.category === 'reply') return 1;
+    return b.date - a.date;
+  });
+}
+
+function renderEmails() {
+  const container = document.getElementById('email-list');
+  const emails = getFilteredEmails();
+
+  if (emails.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3>Nothing here</h3>
+        <p>No emails match this filter. Try refreshing or adjusting your settings.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = emails.map(e => renderEmailItem(e)).join('');
+
+  // Show AI digest button if key is set
+  const hasKey = state.settings.anthropicKey || document.getElementById('anthropic-key-input')?.value;
+  document.getElementById('digest-btn').style.display = hasKey ? 'inline-flex' : 'none';
+}
+
+function renderEmailItem(email) {
+  const time = formatTime(email.date);
+  let tags = '';
+  if (email.category === 'reply') tags += `<span class="tag tag-reply">↩ Reply</span>`;
+  else if (email.category === 'read') tags += `<span class="tag tag-read">👁 Read</span>`;
+  else tags += `<span class="tag tag-fyi">💡 FYI</span>`;
+  if (email.isWatched) tags += `<span class="tag tag-watched">⭐ Watched</span>`;
+
+  const summaryHTML = email.aiSummary
+    ? `<div class="ai-summary">
+        <div class="ai-summary-label">✦ AI Summary</div>
+        <div class="ai-summary-text">${email.aiSummary}</div>
+        <div class="ai-summary-actions">
+          ${email.category === 'reply' ? `<button class="btn btn-primary btn-sm" onclick="openGmail('${email.threadId}')">Reply in Gmail →</button>` : ''}
+          <button class="btn btn-ghost btn-sm" style="color:var(--muted);border-color:var(--rule);" onclick="openGmail('${email.threadId}')">Open in Gmail</button>
+        </div>
+      </div>`
+    : `<div class="ai-summary" id="summary-placeholder-${email.id}">
+        <div class="ai-summary-label">✦ AI Summary <span class="digest-spinner" id="spinner-${email.id}" style="display:none;"><span class="spin">◌</span> Generating…</span></div>
+        <div class="ai-summary-text" style="color:var(--muted);font-style:italic;">Click to generate an AI summary of this email.</div>
+        <div class="ai-summary-actions">
+          <button class="btn btn-ink btn-sm" onclick="summarizeEmail(event, '${email.id}')">✦ Summarize</button>
+          <button class="btn btn-ghost btn-sm" style="color:var(--muted);border-color:var(--rule);" onclick="openGmail('${email.threadId}')">Open in Gmail</button>
+        </div>
+      </div>`;
+
+  const bodyPreview = email.body
+    ? `<div class="email-body-preview">${escapeHtml(email.body.slice(0, 400))}</div>`
+    : '';
+
+  return `
+    <div class="email-item ${email.isUnread ? 'unread' : ''}" id="item-${email.id}" onclick="toggleEmail('${email.id}')">
+      <div class="email-header">
+        <div class="email-meta">
+          <div class="email-from">${escapeHtml(email.fromName)}</div>
+          <div class="email-subject">${escapeHtml(email.subject)}</div>
+          <div class="email-snippet">${escapeHtml(email.snippet)}</div>
+        </div>
+        <div class="email-aside">
+          <div class="email-time">${time}</div>
+          <div class="email-tags">${tags}</div>
+        </div>
+      </div>
+      <div class="email-expanded">
+        ${summaryHTML}
+        ${bodyPreview}
+      </div>
+    </div>`;
+}
+
+function toggleEmail(id) {
+  const item = document.getElementById(`item-${id}`);
+  item.classList.toggle('expanded');
+}
+
+function openGmail(threadId) {
+  window.open(`https://mail.google.com/mail/u/0/#inbox/${threadId}`, '_blank');
+}
+
+// ─── AI SUMMARY ──────────────────────────────────────────────────────────────
+async function summarizeEmail(event, emailId) {
+  event.stopPropagation();
+  const apiKey = state.settings.anthropicKey || document.getElementById('anthropic-key-input')?.value;
+  if (!apiKey) { showToast('Add your Anthropic API key in Settings'); openSettings(); return; }
+
+  const email = state.emails.find(e => e.id === emailId);
+  if (!email) return;
+
+  // Show spinner
+  const spinner = document.getElementById(`spinner-${emailId}`);
+  if (spinner) spinner.style.display = 'inline-flex';
+  const placeholder = document.getElementById(`summary-placeholder-${emailId}`);
+
+  try {
+    const prompt = `You are an email assistant. Analyze this email and provide a concise, actionable summary.
+
+From: ${email.from}
+Subject: ${email.subject}
+Date: ${email.date.toLocaleString()}
+
+Body:
+${email.body || email.snippet}
+
+Respond with a 2-4 sentence summary that:
+1. States what this email is about
+2. Highlights any action required (with deadline if mentioned)
+3. Notes urgency level
+
+Be direct and concrete. No filler phrases.`;
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.error?.message || `API error ${response.status}`);
+    }
+
+    const data = await response.json();
+    const summary = data.content?.[0]?.text || 'Could not generate summary.';
+
+    // Update email object
+    email.aiSummary = summary;
+
+    // Re-render just this email
+    const item = document.getElementById(`item-${emailId}`);
+    const wasExpanded = item.classList.contains('expanded');
+    item.outerHTML = renderEmailItem(email);
+    if (wasExpanded) {
+      const newItem = document.getElementById(`item-${emailId}`);
+      if (newItem) newItem.classList.add('expanded');
+    }
+
+    showToast('Summary generated');
+  } catch(e) {
+    if (spinner) spinner.style.display = 'none';
+    showToast('Summary failed: ' + e.message);
+    console.error(e);
+  }
+}
+
+// ─── AI DIGEST ───────────────────────────────────────────────────────────────
+async function generateDigest() {
+  const apiKey = state.settings.anthropicKey || document.getElementById('anthropic-key-input')?.value;
+  if (!apiKey) { showToast('Add your Anthropic API key in Settings'); openSettings(); return; }
+  if (state.emails.length === 0) { showToast('No emails loaded'); return; }
+
+  const section = document.getElementById('digest-section');
+  const banner = document.getElementById('digest-banner');
+  const text = document.getElementById('digest-text');
+
+  section.style.display = 'block';
+  banner.classList.add('loading');
+  text.innerHTML = '<span class="spin">◌</span> Generating your morning digest…';
+
+  const topEmails = getFilteredEmails().slice(0, 15);
+  const emailSummaries = topEmails.map((e, i) =>
+    `${i+1}. From: ${e.fromName} | Subject: ${e.subject} | Category: ${e.category} | ${e.snippet}`
+  ).join('\n');
+
+  const prompt = `You are a sharp executive assistant writing a morning email briefing.
+
+Here are the most important emails from today's inbox:
+
+${emailSummaries}
+
+Write a concise morning digest in 3-5 sentences that:
+- Leads with the single most urgent/important item
+- Groups any related themes (e.g., "3 items need your reply today")
+- Notes any deadlines mentioned
+- Ends with a count: "X items need your attention"
+
+Write in a direct, professional tone. No bullet points — flowing prose only.`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!response.ok) throw new Error(`API error ${response.status}`);
+    const data = await response.json();
+    const digest = data.content?.[0]?.text || 'Could not generate digest.';
+
+    state.digestText = digest;
+    text.textContent = digest;
+    banner.classList.remove('loading');
+  } catch(e) {
+    text.textContent = 'Failed to generate digest: ' + e.message;
+    banner.classList.remove('loading');
+  }
+}
+
+function copyDigest() {
+  if (state.digestText) {
+    navigator.clipboard.writeText(state.digestText).then(() => showToast('Digest copied to clipboard'));
+  }
+}
+
+function closeDigest() {
+  document.getElementById('digest-section').style.display = 'none';
+}
+
+// ─── STATS & FILTERS ─────────────────────────────────────────────────────────
+function updateStats() {
+  const emails = state.emails;
+  const reply = emails.filter(e => e.category === 'reply').length;
+  const read = emails.filter(e => e.category === 'read' && e.isUnread).length;
+  const fyi = emails.filter(e => e.category === 'fyi').length;
+  const watched = emails.filter(e => e.isWatched).length;
+  const unread = emails.filter(e => e.isUnread).length;
+
+  document.getElementById('stat-total').textContent = emails.length;
+  document.getElementById('stat-unread').textContent = unread;
+  document.getElementById('stat-reply').textContent = reply;
+  document.getElementById('stat-fyi').textContent = fyi;
+
+  document.getElementById('nav-all').textContent = emails.length;
+  document.getElementById('nav-reply').textContent = reply;
+  document.getElementById('nav-read').textContent = read;
+  document.getElementById('nav-fyi').textContent = fyi;
+  document.getElementById('nav-watched').textContent = watched;
+}
+
+function setFilter(filter, el) {
+  state.currentFilter = filter;
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+
+  const titles = { all: 'All Important', reply: 'Needs Reply', read: 'Needs Reading', fyi: 'FYI / CC\'d', watched: 'Watched Senders' };
+  document.getElementById('main-title').textContent = titles[filter];
+  renderEmails();
+}
+
+// ─── SETTINGS ────────────────────────────────────────────────────────────────
+function openSettings() {
+  const s = state.settings;
+  document.getElementById('settings-anthropic-key').value = s.anthropicKey || '';
+  document.getElementById('settings-max-emails').value = s.maxEmails || 50;
+  renderTagList('sender-tags', s.watchedSenders, 'sender');
+  renderTagList('keyword-tags', s.keywords, 'keyword');
+  document.getElementById('settings-modal').classList.add('open');
+}
+
+function closeSettings() {
+  document.getElementById('settings-modal').classList.remove('open');
+}
+
+function saveSettings() {
+  const s = state.settings;
+  s.anthropicKey = document.getElementById('settings-anthropic-key').value.trim();
+  s.maxEmails = parseInt(document.getElementById('settings-max-emails').value) || 50;
+
+  const saved = JSON.parse(localStorage.getItem('md_settings') || '{}');
+  Object.assign(saved, { anthropicKey: s.anthropicKey, maxEmails: s.maxEmails, watchedSenders: s.watchedSenders, keywords: s.keywords });
+  localStorage.setItem('md_settings', JSON.stringify(saved));
+
+  closeSettings();
+  showToast('Settings saved');
+  refreshEmails();
+}
+
+function renderTagList(containerId, items, type) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = items.map((item, i) =>
+    `<div class="tag-item">${escapeHtml(item)}<button class="tag-remove" onclick="removeTag('${type}', ${i})">×</button></div>`
+  ).join('');
+}
+
+function removeTag(type, index) {
+  if (type === 'sender') state.settings.watchedSenders.splice(index, 1);
+  else state.settings.keywords.splice(index, 1);
+  openSettings(); // re-render
+}
+
+function addSender() {
+  const input = document.getElementById('sender-input');
+  const val = input.value.trim();
+  if (val && !state.settings.watchedSenders.includes(val)) {
+    state.settings.watchedSenders.push(val);
+    renderTagList('sender-tags', state.settings.watchedSenders, 'sender');
+    input.value = '';
+  }
+}
+
+function addKeyword() {
+  const input = document.getElementById('keyword-input');
+  const val = input.value.trim().toLowerCase();
+  if (val && !state.settings.keywords.includes(val)) {
+    state.settings.keywords.push(val);
+    renderTagList('keyword-tags', state.settings.keywords, 'keyword');
+    input.value = '';
+  }
+}
+
+// ─── UI HELPERS ──────────────────────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+}
+
+function showDashboard() {
+  showPage('dashboard');
+  document.getElementById('dashboard').classList.add('active');
+  updateMastheadActions(true);
+}
+
+function updateMastheadActions(loggedIn) {
+  const el = document.getElementById('masthead-actions');
+  if (loggedIn) {
+    el.innerHTML = `
+      <button class="btn btn-ghost btn-sm" onclick="openSettings()">⚙ Settings</button>
+      <button class="btn btn-ghost btn-sm" onclick="refreshEmails()">↻ Refresh</button>
+    `;
+  } else {
+    el.innerHTML = '';
+  }
+}
+
+function setLoading(on) {
+  document.getElementById('loading-bar').style.display = on ? 'block' : 'none';
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function formatTime(date) {
+  const now = new Date();
+  const diff = now - date;
+  if (diff < 3600000) return `${Math.floor(diff/60000)}m ago`;
+  if (diff < 86400000) return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Close modal on overlay click
+document.getElementById('settings-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeSettings();
+});
+</script>
+</body>
+</html>
