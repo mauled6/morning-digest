@@ -5,98 +5,119 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MorningDigest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #5c3d1e;
-    --paper: #fffbf5;
-    --cream: #fef3dd;
-    --gold: #f9a875;
-    --gold-light: #fcd9b0;
-    --rust: #f97b52;
-    --sage: #48bb78;
-    --muted: #c4956a;
-    --rule: #f0dfc4;
-    --white: #ffffff;
-    --peach: #fed7c3;
-    --mint: #c6f6d5;
-    --lavender: #fef3dd;
-    --shadow: 0 2px 16px rgba(92,61,30,0.08);
-    --shadow-lg: 0 8px 36px rgba(92,61,30,0.12);
+    --ink:        #2c1a0e;
+    --ink-soft:   #5c3d1e;
+    --paper:      #fffbf5;
+    --cream:      #fef4e2;
+    --warm:       #fdeac8;
+    --gold:       #e8923a;
+    --gold-light: #f5c98a;
+    --gold-pale:  #fde8c4;
+    --rust:       #d45f35;
+    --sage:       #3a9e6a;
+    --muted:      #a07848;
+    --muted-soft: #c4a882;
+    --rule:       #ecdcC4;
+    --rule-soft:  #f5ece0;
+    --white:      #ffffff;
+    --nav-active: #2c1a0e;
+    --shadow-sm:  0 1px 4px rgba(44,26,14,0.06);
+    --shadow:     0 3px 16px rgba(44,26,14,0.09);
+    --shadow-lg:  0 10px 44px rgba(44,26,14,0.13);
+    --radius:     6px;
+    --radius-sm:  4px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Outfit', sans-serif;
     background: var(--paper);
     color: var(--ink);
     min-height: 100vh;
     font-size: 14px;
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* ── MASTHEAD ── */
   .masthead {
-    background: linear-gradient(135deg, #fcd490 0%, #f9a875 50%, #f97b52 100%);
+    background: var(--ink);
     color: white;
-    padding: 0 32px;
+    padding: 0 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
-    box-shadow: 0 2px 16px rgba(249,168,117,0.3);
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06), var(--shadow-sm);
   }
+  .masthead-left { display: flex; align-items: center; gap: 20px; }
   .masthead-title {
-    font-family: 'Nunito', sans-serif;
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--gold-light);
   }
-  .masthead-title span { color: #fef9c3; }
+  .masthead-title span { color: white; }
   .masthead-date {
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: rgba(255,255,255,0.75);
-    letter-spacing: 0.08em;
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    padding-left: 20px;
+    border-left: 1px solid rgba(255,255,255,0.1);
   }
-  .masthead-actions { display: flex; gap: 10px; align-items: center; }
+  .masthead-actions { display: flex; gap: 8px; align-items: center; }
 
   /* ── BUTTONS ── */
   .btn {
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 500;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     padding: 7px 16px;
-    border: 1.5px solid currentColor;
+    border: 1.5px solid transparent;
     background: transparent;
     cursor: pointer;
-    transition: all 0.15s;
-    border-radius: 2px;
+    transition: all 0.15s ease;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
   }
-  .btn-ghost { color: white; }
-  .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+
+  .btn-ghost-light { color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.2); }
+  .btn-ghost-light:hover { background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.4); }
+
   .btn-primary {
     background: var(--gold);
-    color: var(--ink);
-    border-color: var(--gold);
-    font-weight: 500;
-  }
-  .btn-primary:hover { background: #805ad5; border-color: #805ad5; }
-  .btn-ink {
-    background: var(--ink);
     color: white;
-    border-color: var(--ink);
+    border-color: var(--gold);
+    font-weight: 600;
   }
-  .btn-ink:hover { background: #2d2650; }
-  .btn-danger { color: var(--rust); border-color: var(--rust); }
-  .btn-danger:hover { background: var(--rust); color: white; }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-  .btn-sm { padding: 4px 10px; font-size: 10px; }
+  .btn-primary:hover { background: #d07a28; border-color: #d07a28; }
+
+  .btn-ink { background: var(--ink); color: white; border-color: var(--ink); }
+  .btn-ink:hover { background: #1a0e06; }
+
+  .btn-ghost { color: var(--ink-soft); border-color: var(--rule); }
+  .btn-ghost:hover { background: var(--cream); border-color: var(--gold-light); color: var(--ink); }
+
+  .btn-danger { color: var(--rust); border-color: rgba(212,95,53,0.3); }
+  .btn-danger:hover { background: var(--rust); color: white; border-color: var(--rust); }
+
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  .btn-sm { padding: 5px 11px; font-size: 9.5px; }
 
   /* ── PAGES ── */
   .page { display: none; }
@@ -110,120 +131,184 @@
     align-items: center;
     justify-content: center;
     padding: 60px 24px;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
   }
+  /* Decorative background */
+  #landing::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,146,58,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #landing::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,146,58,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
   .landing-kicker {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--gold);
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
+  .landing-kicker::before, .landing-kicker::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--gold-light);
+  }
+
   .landing-headline {
-    font-family: 'Nunito', sans-serif;
-    font-size: clamp(36px, 6vw, 60px);
-    font-weight: 700;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 6vw, 66px);
+    font-weight: 600;
     text-align: center;
-    line-height: 1.1;
+    line-height: 1.08;
     max-width: 640px;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
   }
-  .landing-headline em { color: #f9a875; font-style: italic; }
+  .landing-headline em {
+    color: var(--gold);
+    font-style: italic;
+    font-weight: 400;
+  }
   .landing-sub {
     color: var(--muted);
     font-size: 15px;
     text-align: center;
-    max-width: 440px;
-    margin-bottom: 48px;
-    line-height: 1.7;
+    max-width: 420px;
+    margin-bottom: 52px;
+    line-height: 1.75;
+    font-weight: 300;
   }
+
   .landing-card {
     background: var(--white);
-    border: 1.5px solid var(--rule);
-    border-radius: 4px;
-    padding: 40px 48px;
-    max-width: 520px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 40px 44px;
+    max-width: 500px;
     width: 100%;
     box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 1;
   }
+  .landing-card-header { margin-bottom: 28px; }
   .landing-card h3 {
-    font-family: 'Nunito', sans-serif;
-    font-size: 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
     margin-bottom: 6px;
   }
-  .landing-card p {
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 28px;
-    line-height: 1.6;
-  }
+  .landing-card p { color: var(--muted); font-size: 13px; line-height: 1.65; font-weight: 300; }
 
   /* Setup steps */
-  .steps { margin-bottom: 32px; }
-  .step {
-    display: flex;
-    gap: 16px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  .step:last-child { border-bottom: none; }
-  .step-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--gold);
-    font-weight: 500;
-    min-width: 20px;
-    padding-top: 1px;
-  }
-  .step-text { font-size: 13px; color: var(--ink); line-height: 1.5; }
-  .step-text strong { font-weight: 500; }
-  .step-text a { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold-light); }
-  .step-text a:hover { border-color: var(--gold); }
-
-  /* Input group */
-  .input-group { margin-bottom: 20px; }
-  .input-group label {
-    display: block;
+  .steps-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
     font-family: 'DM Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    color: var(--muted-soft);
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+    transition: color 0.15s;
+  }
+  .steps-toggle:hover { color: var(--gold); }
+  .steps-toggle .chevron { transition: transform 0.2s; font-style: normal; }
+  .steps-toggle.open .chevron { transform: rotate(90deg); }
+  .steps-body { display: none; margin-bottom: 24px; }
+  .steps-body.open { display: block; }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    font-weight: 500;
+    min-width: 18px;
+    padding-top: 2px;
+  }
+  .step-text { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .step-text strong { font-weight: 500; color: var(--ink); }
+  .step-text a { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold-pale); }
+  .step-text a:hover { border-color: var(--gold); }
+
+  /* Input group */
+  .input-group { margin-bottom: 18px; }
+  .input-group label {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
   .input-group input, .input-group textarea {
     width: 100%;
-    padding: 10px 14px;
+    padding: 10px 13px;
     border: 1.5px solid var(--rule);
     background: var(--paper);
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     color: var(--ink);
-    border-radius: 2px;
+    border-radius: var(--radius-sm);
     outline: none;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
-  .input-group input:focus, .input-group textarea:focus { border-color: var(--gold); }
+  .input-group input:focus, .input-group textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(232,146,58,0.1);
+  }
   .input-group textarea { resize: vertical; min-height: 60px; }
 
-  .sign-in-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .sign-in-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 4px; }
   .notice {
     font-size: 11px;
-    color: var(--muted);
+    color: var(--muted-soft);
     font-style: italic;
-    margin-top: 12px;
-    line-height: 1.5;
+    margin-top: 14px;
+    line-height: 1.55;
   }
 
   /* ── DASHBOARD ── */
   #dashboard { display: none; }
-  #dashboard.active { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 56px); }
+  #dashboard.active { display: grid; grid-template-columns: 228px 1fr; min-height: calc(100vh - 56px); }
 
   /* Sidebar */
   .sidebar {
-    background: linear-gradient(180deg, #fffaf2 0%, #fff8f0 100%);
-    border-right: 1.5px solid var(--rule);
-    padding: 28px 0;
+    background: var(--white);
+    border-right: 1px solid var(--rule);
+    padding: 24px 0 16px;
     position: sticky;
     top: 56px;
     height: calc(100vh - 56px);
@@ -232,224 +317,256 @@
     flex-direction: column;
   }
   .sidebar-section {
-    padding: 0 20px;
-    margin-bottom: 28px;
+    padding: 0 16px;
+    margin-bottom: 24px;
   }
   .sidebar-label {
     font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.18em;
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--muted-soft);
     margin-bottom: 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--rule);
   }
 
   /* Stats */
-  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .stat-box {
     background: var(--paper);
     border: 1px solid var(--rule);
-    border-radius: 3px;
-    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    padding: 10px 10px 8px;
     text-align: center;
+    transition: border-color 0.15s;
   }
+  .stat-box:hover { border-color: var(--gold-light); }
   .stat-num {
-    font-family: 'Nunito', sans-serif;
-    font-size: 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
     line-height: 1;
     display: block;
+    color: var(--ink);
   }
-  .stat-label { font-size: 10px; color: var(--muted); margin-top: 2px; display: block; }
-  .stat-box.highlight {  border-color: var(--ink); }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+    margin-top: 3px;
+    display: block;
+  }
+  .stat-box.highlight { border-color: var(--gold-light); background: var(--cream); }
   .stat-box.highlight .stat-num { color: var(--gold); }
-  .stat-box.highlight .stat-label { color: rgba(245,240,232,0.5); }
 
   /* Nav filters */
   .nav-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 12px;
-    border-radius: 3px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: background 0.12s;
-    margin-bottom: 2px;
+    transition: all 0.12s;
+    margin-bottom: 1px;
     font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 400;
   }
-  .nav-item:hover { background: var(--cream); }
-  .nav-item.active {  color: var(--paper); }
-  .nav-item.active .nav-count { background: var(--gold); color: white; }
+  .nav-item:hover { background: var(--cream); color: var(--ink); }
+  .nav-item.active { background: var(--ink); color: white; }
+  .nav-item.active .nav-count { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8); }
+  .nav-item.active .nav-icon { filter: none; }
   .nav-left { display: flex; align-items: center; gap: 8px; }
-  .nav-icon { font-size: 14px; }
+  .nav-icon { font-size: 13px; }
   .nav-count {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
     background: var(--cream);
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 1px 7px;
-    font-weight: 500;
+    color: var(--muted);
+    min-width: 24px;
+    text-align: center;
   }
 
-  /* Sidebar bottom */
+  /* Sidebar footer */
   .sidebar-footer {
     margin-top: auto;
-    padding: 16px 20px;
+    padding: 14px 16px;
     border-top: 1px solid var(--rule);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
   }
 
   /* Main content */
   .main {
     background: var(--paper);
-    padding: 32px;
+    padding: 28px 32px;
     overflow-y: auto;
+    min-width: 0;
   }
   .main-header {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     padding-bottom: 16px;
-    border-bottom: 1.5px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
   }
   .main-title {
-    font-family: 'Nunito', sans-serif;
-    font-size: 26px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
-  .main-actions { display: flex; gap: 10px; align-items: center; }
+  .main-actions { display: flex; gap: 8px; align-items: center; }
 
   /* Digest banner */
   .digest-banner {
-    
-    color: var(--paper);
-    border-radius: 3px;
+    background: var(--ink);
+    border-radius: var(--radius);
     padding: 20px 24px;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 24px;
-    border-left: 4px solid var(--gold);
+    gap: 20px;
+    border-left: 3px solid var(--gold);
+    animation: slideDown 0.25s ease;
   }
-  .digest-banner.loading { opacity: 0.7; }
-  .digest-content { flex: 1; }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .digest-banner.loading { opacity: 0.8; }
+  .digest-content { flex: 1; min-width: 0; }
   .digest-label {
     font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.18em;
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 8px;
-    display: block;
+    color: var(--gold-light);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
   .digest-text {
     font-size: 13.5px;
-    line-height: 1.7;
-    color: rgba(255,255,255,0.92);
+    line-height: 1.75;
+    color: rgba(255,255,255,0.88);
+    font-weight: 300;
   }
-  .digest-text strong { color: var(--paper); }
-  .digest-actions { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
-  .digest-spinner {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--gold);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .spin { display: inline-block; animation: spin 1s linear infinite; }
+  .digest-text strong { color: white; font-weight: 500; }
+  .digest-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
 
   /* Email list */
-  .email-list { display: flex; flex-direction: column; gap: 0; }
+  .email-list { display: flex; flex-direction: column; }
   .email-item {
     background: var(--white);
-    border: 1.5px solid var(--rule);
-    border-radius: 3px;
-    padding: 18px 22px;
-    margin-bottom: 8px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 6px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.15s ease;
     position: relative;
+    overflow: hidden;
   }
-  .email-item:hover { border-color: var(--gold-light); box-shadow: var(--shadow); transform: translateY(-1px); }
-  .email-item.expanded { border-color: var(--gold); }
+  .email-item:hover {
+    border-color: var(--gold-light);
+    box-shadow: var(--shadow);
+    transform: translateY(-1px);
+  }
+  .email-item.expanded { border-color: var(--gold); box-shadow: var(--shadow); }
+
+  /* Unread indicator — left accent line */
   .email-item.unread::before {
     content: '';
     position: absolute;
-    left: -1.5px; top: -1.5px; bottom: -1.5px;
+    left: 0; top: 0; bottom: 0;
     width: 3px;
     background: var(--gold);
-    border-radius: 3px 0 0 3px;
+    border-radius: var(--radius) 0 0 var(--radius);
   }
+  .email-item.unread { padding-left: 23px; }
 
-  .email-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .email-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
   .email-meta { flex: 1; min-width: 0; }
   .email-from {
     font-weight: 500;
-    font-size: 13px;
+    font-size: 13.5px;
     margin-bottom: 2px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: var(--ink);
   }
   .email-subject {
     font-size: 13px;
-    color: var(--ink);
+    color: var(--ink-soft);
     margin-bottom: 4px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .email-item.unread .email-subject { font-weight: 500; }
-  .email-snippet { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .email-item.unread .email-subject { font-weight: 500; color: var(--ink); }
+  .email-snippet {
+    font-size: 12px;
+    color: var(--muted-soft);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 300;
+  }
 
   .email-aside { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
   .email-time {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
-    color: var(--muted);
+    color: var(--muted-soft);
     white-space: nowrap;
   }
-  .email-tags { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .email-tags { display: flex; gap: 3px; flex-wrap: wrap; justify-content: flex-end; }
   .tag {
     font-family: 'DM Mono', monospace;
     font-size: 9px;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     padding: 2px 7px;
-    border-radius: 2px;
+    border-radius: 3px;
     font-weight: 500;
   }
   .tag-reply { background: #fde8d8; color: #c05020; }
-  .tag-read { background: #d8f0e4; color: #4a7a60; }
-  .tag-fyi { background: #fef3dd; color: var(--ink); border: 1px solid var(--gold-light); }
-  .tag-watched { background: #fef3c7; color: #a06020; }
+  .tag-read  { background: #d8f0e4; color: #2d7a50; }
+  .tag-fyi   { background: var(--cream); color: var(--muted); border: 1px solid var(--rule); }
+  .tag-watched { background: #fef3c7; color: #9a6010; }
 
   /* Expanded email */
   .email-expanded {
     display: none;
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--rule);
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule-soft);
+    animation: fadeIn 0.2s ease;
   }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   .email-item.expanded .email-expanded { display: block; }
 
   .ai-summary {
-    background: linear-gradient(135deg, #fffaf2, #fff8f0);
-    border: 1px solid var(--gold-light);
-    border-radius: 3px;
-    padding: 14px 18px;
-    margin-bottom: 14px;
+    background: linear-gradient(135deg, var(--cream) 0%, #fef8f0 100%);
+    border: 1px solid var(--gold-pale);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 12px;
   }
   .ai-summary-label {
     font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.16em;
+    font-size: 8.5px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 8px;
@@ -457,27 +574,24 @@
     align-items: center;
     gap: 6px;
   }
-  .ai-summary-text { font-size: 13px; line-height: 1.65; color: var(--ink); }
-  .ai-summary-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-    flex-wrap: wrap;
-  }
+  .ai-summary-text { font-size: 13px; line-height: 1.7; color: var(--ink); font-weight: 300; }
+  .ai-summary-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
 
   .email-body-preview {
     font-size: 12.5px;
     line-height: 1.7;
     color: var(--muted);
-    max-height: 120px;
+    max-height: 110px;
     overflow: hidden;
     position: relative;
+    white-space: pre-wrap;
+    font-weight: 300;
   }
   .email-body-preview::after {
     content: '';
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    height: 40px;
+    height: 36px;
     background: linear-gradient(transparent, var(--white));
   }
 
@@ -486,73 +600,119 @@
     font-size: 10px;
     color: var(--gold);
     text-decoration: none;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    margin-top: 10px;
+    margin-top: 8px;
+    transition: color 0.12s;
   }
   .open-gmail-link:hover { color: var(--rust); }
+
+  /* Spinner */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spin { display: inline-block; animation: spin 1s linear infinite; }
+  .digest-spinner {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
 
   /* Empty state */
   .empty-state {
     text-align: center;
     padding: 80px 32px;
-    color: var(--muted);
+    color: var(--muted-soft);
   }
-  .empty-icon { font-size: 40px; margin-bottom: 16px; }
+  .empty-icon { font-size: 36px; margin-bottom: 14px; }
   .empty-state h3 {
-    font-family: 'Nunito', sans-serif;
-    font-size: 20px;
-    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink-soft);
     margin-bottom: 8px;
   }
-  .empty-state p { font-size: 13px; line-height: 1.6; }
+  .empty-state p { font-size: 13px; line-height: 1.65; font-weight: 300; }
 
   /* Settings modal */
   .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(15,14,13,0.6);
+    background: rgba(15,10,5,0.55);
+    backdrop-filter: blur(3px);
     z-index: 100;
     align-items: center;
     justify-content: center;
     padding: 24px;
+    animation: fadeIn 0.15s ease;
   }
   .modal-overlay.open { display: flex; }
   .modal {
     background: var(--white);
-    border: 1.5px solid var(--rule);
-    border-radius: 4px;
-    max-width: 480px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    max-width: 460px;
     width: 100%;
-    max-height: 80vh;
+    max-height: 82vh;
     overflow-y: auto;
     box-shadow: var(--shadow-lg);
+    animation: slideDown 0.2s ease;
   }
   .modal-header {
-    padding: 20px 24px;
-    border-bottom: 1.5px solid var(--rule);
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--rule);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    z-index: 1;
   }
-  .modal-header h3 { font-family: 'Nunito', sans-serif; font-size: 18px; }
+  .modal-header h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
   .modal-close {
     background: none; border: none; cursor: pointer;
-    font-size: 18px; color: var(--muted); padding: 4px;
+    font-size: 18px; color: var(--muted-soft); padding: 4px;
+    border-radius: 3px; transition: all 0.12s;
+    line-height: 1;
   }
-  .modal-close:hover { color: var(--ink); }
-  .modal-body { padding: 24px; }
+  .modal-close:hover { color: var(--ink); background: var(--cream); }
+  .modal-body { padding: 22px; }
   .modal-footer {
-    padding: 16px 24px;
+    padding: 14px 22px;
     border-top: 1px solid var(--rule);
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 8px;
+    background: var(--paper);
+    border-radius: 0 0 var(--radius) var(--radius);
   }
+
+  /* API key status indicator */
+  .api-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+  }
+  .api-status.connected { background: #d8f0e4; color: #2d7a50; }
+  .api-status.disconnected { background: var(--cream); color: var(--muted); }
+  .api-status-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
   /* Tag list */
   .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -561,28 +721,35 @@
     align-items: center;
     gap: 5px;
     background: var(--cream);
-    border-radius: 2px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
     padding: 3px 8px 3px 10px;
     font-size: 12px;
+    color: var(--ink-soft);
   }
   .tag-remove {
     background: none; border: none; cursor: pointer;
-    color: var(--muted); font-size: 14px; padding: 0; line-height: 1;
+    color: var(--muted-soft); font-size: 15px; padding: 0;
+    line-height: 1; transition: color 0.12s;
   }
   .tag-remove:hover { color: var(--rust); }
   .tag-input-row { display: flex; gap: 8px; margin-top: 8px; }
   .tag-input-row input {
     flex: 1;
-    padding: 7px 12px;
+    padding: 8px 12px;
     border: 1.5px solid var(--rule);
     background: var(--paper);
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 13px;
     color: var(--ink);
-    border-radius: 2px;
+    border-radius: var(--radius-sm);
     outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
-  .tag-input-row input:focus { border-color: var(--gold); }
+  .tag-input-row input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(232,146,58,0.1);
+  }
 
   /* Loading bar */
   .loading-bar {
@@ -590,52 +757,71 @@
     background: var(--rule);
     border-radius: 1px;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
   .loading-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #fcd490, #f9a875);
+    background: linear-gradient(90deg, var(--gold-light), var(--gold), var(--rust));
     border-radius: 1px;
-    animation: loadingPulse 1.5s ease-in-out infinite;
+    animation: loadSlide 1.6s ease-in-out infinite;
   }
-  @keyframes loadingPulse {
-    0% { width: 0%; margin-left: 0; }
-    50% { width: 70%; margin-left: 15%; }
-    100% { width: 0%; margin-left: 100%; }
+  @keyframes loadSlide {
+    0%   { width: 0%;  margin-left: 0; }
+    50%  { width: 60%; margin-left: 20%; }
+    100% { width: 0%;  margin-left: 100%; }
   }
 
   /* Toast */
   .toast {
     position: fixed;
-    bottom: 28px;
-    right: 28px;
-    
-    color: var(--paper);
+    bottom: 24px;
+    right: 24px;
+    background: var(--ink);
+    color: rgba(255,255,255,0.9);
     padding: 10px 18px;
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.04em;
     z-index: 200;
     opacity: 0;
-    transform: translateY(8px);
-    transition: all 0.2s;
+    transform: translateY(10px);
+    transition: all 0.22s ease;
     pointer-events: none;
-    border-left: 3px solid #fcd490;
+    border-left: 3px solid var(--gold);
+    max-width: 320px;
   }
   .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.error { border-left-color: var(--rust); }
+
+  /* Divider */
+  .modal-divider {
+    height: 1px;
+    background: var(--rule-soft);
+    margin: 18px 0;
+  }
+
+  /* Section note */
+  .section-note {
+    font-size: 11px;
+    color: var(--muted-soft);
+    margin-bottom: 8px;
+    line-height: 1.5;
+    font-weight: 300;
+  }
 
   /* Scrollbar */
-  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+  ::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted-soft); }
 
   @media (max-width: 720px) {
     #dashboard.active { grid-template-columns: 1fr; }
     .sidebar { display: none; }
-    .main { padding: 20px 16px; }
+    .main { padding: 18px 16px; }
     .landing-card { padding: 28px 24px; }
+    .masthead-date { display: none; }
   }
 </style>
 </head>
@@ -643,48 +829,52 @@
 
 <!-- MASTHEAD -->
 <header class="masthead">
-  <div class="masthead-title">Morning<span>Digest</span></div>
-  <div class="masthead-date" id="masthead-date"></div>
-  <div class="masthead-actions" id="masthead-actions">
-    <!-- populated by JS -->
+  <div class="masthead-left">
+    <div class="masthead-title">Morning<span>Digest</span></div>
+    <div class="masthead-date" id="masthead-date"></div>
   </div>
+  <div class="masthead-actions" id="masthead-actions"></div>
 </header>
 
 <!-- LANDING PAGE -->
 <div id="landing" class="page active">
-  <p class="landing-kicker">✦ Inbox Intelligence</p>
+  <p class="landing-kicker">Inbox Intelligence</p>
   <h1 class="landing-headline">Your inbox, <em>distilled</em><br>every morning.</h1>
   <p class="landing-sub">Surface what matters, skip the noise. AI-powered summaries and smart categorization for your Gmail inbox.</p>
 
   <div class="landing-card">
-    <h3>Connect your Gmail</h3>
-    <p>MorningDigest uses Gmail read-only access. Your emails are processed locally and never stored on any server.</p>
+    <div class="landing-card-header">
+      <h3>Connect your Gmail</h3>
+      <p>MorningDigest uses Gmail read-only access. Your emails are processed locally and never stored on any server.</p>
+    </div>
 
-    <details style="margin-bottom:24px;">
-      <summary style="cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Gmail API Setup Instructions</summary>
-      <div class="steps" style="margin-top:12px;">
+    <button class="steps-toggle" id="steps-toggle" onclick="toggleSteps()">
+      <span class="chevron">›</span> Gmail API Setup Instructions
+    </button>
+    <div class="steps-body" id="steps-body">
+      <div class="steps">
         <div class="step"><div class="step-num">01</div><div class="step-text">Go to <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a> → Create a new project</div></div>
-        <div class="step"><div class="step-num">02</div><div class="step-text">Enable the <strong>Gmail API</strong> for your project under APIs & Services</div></div>
-        <div class="step"><div class="step-num">03</div><div class="step-text">Create <strong>OAuth 2.0 credentials</strong> (Web Application type) and add this page's URL as an authorized JavaScript origin</div></div>
-        <div class="step"><div class="step-num">04</div><div class="step-text">Paste your <strong>Client ID</strong> below and click Sign In</div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-text">Enable the <strong>Gmail API</strong> under APIs & Services</div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-text">Create <strong>OAuth 2.0 credentials</strong> (Web Application type) and add this page's URL as an authorized origin</div></div>
+        <div class="step"><div class="step-num">04</div><div class="step-text">Paste your <strong>Client ID</strong> below and sign in</div></div>
       </div>
-    </details>
-
-    <div class="input-group">
-      <label>Google OAuth Client ID</label>
-      <input type="text" id="client-id-input" placeholder="xxxxxxxxxxxx.apps.googleusercontent.com">
     </div>
 
     <div class="input-group">
-      <label>Anthropic API Key <span style="color:var(--muted);font-size:10px;font-weight:300;">(optional — for AI summaries)</span></label>
-      <input type="password" id="anthropic-key-input" placeholder="sk-ant-...">
+      <label>Google OAuth Client ID</label>
+      <input type="text" id="client-id-input" placeholder="xxxxxxxxxxxx.apps.googleusercontent.com" autocomplete="off">
+    </div>
+
+    <div class="input-group">
+      <label>Anthropic API Key <span style="color:var(--muted-soft);font-size:9px;font-weight:300;">(optional — for AI summaries)</span></label>
+      <input type="password" id="anthropic-key-input" placeholder="sk-ant-api03-…" autocomplete="off">
     </div>
 
     <div class="sign-in-row">
       <button class="btn btn-primary" onclick="startSignIn()">Sign in with Google →</button>
-      <button class="btn btn-ghost" style="color:var(--muted);border-color:var(--rule);" onclick="loadDemo()">Try demo</button>
+      <button class="btn btn-ghost" onclick="loadDemo()">Try demo</button>
     </div>
-    <p class="notice">Gmail read-only access only. AI summaries use your Anthropic key — calls are made directly from your browser.</p>
+    <p class="notice">Gmail read-only access only. AI summaries use your Anthropic key — API calls are made directly from your browser.</p>
   </div>
 </div>
 
@@ -726,7 +916,7 @@
     </div>
 
     <div class="sidebar-footer">
-      <button class="btn btn-ghost btn-sm" style="color:var(--muted);border-color:var(--rule);" onclick="openSettings()">⚙ Settings</button>
+      <button class="btn btn-ghost btn-sm" onclick="openSettings()">⚙ Settings</button>
       <button class="btn btn-danger btn-sm" onclick="signOut()">Sign Out</button>
     </div>
   </nav>
@@ -735,8 +925,8 @@
     <div class="main-header">
       <h2 class="main-title" id="main-title">All Important</h2>
       <div class="main-actions">
-        <button class="btn btn-primary" id="refresh-btn" onclick="refreshEmails()">↻ Refresh</button>
-        <button class="btn btn-ink btn-sm" id="digest-btn" onclick="generateDigest()" style="display:none;">✦ AI Digest</button>
+        <button class="btn btn-ghost" id="refresh-btn" onclick="refreshEmails()">↻ Refresh</button>
+        <button class="btn btn-primary" id="digest-btn" onclick="generateDigest()" style="display:none;">✦ AI Digest</button>
       </div>
     </div>
 
@@ -745,12 +935,12 @@
     <div id="digest-section" style="display:none;">
       <div class="digest-banner" id="digest-banner">
         <div class="digest-content">
-          <span class="digest-label">✦ AI Morning Digest</span>
+          <div class="digest-label">✦ AI Morning Digest</div>
           <div class="digest-text" id="digest-text">Generating your digest…</div>
         </div>
         <div class="digest-actions">
-          <button class="btn btn-ghost btn-sm" onclick="copyDigest()">Copy</button>
-          <button class="btn btn-ghost btn-sm" onclick="closeDigest()">✕</button>
+          <button class="btn btn-ghost-light btn-sm" onclick="copyDigest()">Copy</button>
+          <button class="btn btn-ghost-light btn-sm" onclick="closeDigest()">✕</button>
         </div>
       </div>
     </div>
@@ -773,15 +963,25 @@
       <button class="modal-close" onclick="closeSettings()">✕</button>
     </div>
     <div class="modal-body">
+
       <div class="input-group">
-        <label>Anthropic API Key</label>
-        <input type="password" id="settings-anthropic-key" placeholder="sk-ant-...">
-        <p style="font-size:11px;color:var(--muted);margin-top:6px;">Used for AI summaries. Calls made directly from your browser.</p>
+        <label>
+          Anthropic API Key
+          <span class="api-status" id="api-status-badge">
+            <span class="api-status-dot"></span>
+            <span id="api-status-text">Not set</span>
+          </span>
+        </label>
+        <input type="password" id="settings-anthropic-key" placeholder="sk-ant-api03-…" autocomplete="off"
+               oninput="updateApiStatusPreview(this.value)">
+        <p class="section-note" style="margin-top:6px;">Used for AI summaries. API calls are made directly from your browser — your key never leaves your device.</p>
       </div>
+
+      <div class="modal-divider"></div>
 
       <div class="input-group">
         <label>Watched Senders</label>
-        <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">Emails from these senders are always shown first.</p>
+        <p class="section-note">Emails from these senders are always shown first.</p>
         <div class="tag-list" id="sender-tags"></div>
         <div class="tag-input-row">
           <input type="text" id="sender-input" placeholder="boss@company.com" onkeydown="if(event.key==='Enter')addSender()">
@@ -791,7 +991,7 @@
 
       <div class="input-group">
         <label>Keywords to Track</label>
-        <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">Emails containing these words are flagged.</p>
+        <p class="section-note">Emails containing these words are flagged as high-priority.</p>
         <div class="tag-list" id="keyword-tags"></div>
         <div class="tag-input-row">
           <input type="text" id="keyword-input" placeholder="urgent, invoice, deadline" onkeydown="if(event.key==='Enter')addKeyword()">
@@ -799,13 +999,16 @@
         </div>
       </div>
 
-      <div class="input-group">
+      <div class="modal-divider"></div>
+
+      <div class="input-group" style="margin-bottom:0;">
         <label>Max emails to fetch</label>
-        <input type="number" id="settings-max-emails" value="50" min="10" max="200" style="width:120px;">
+        <input type="number" id="settings-max-emails" value="50" min="10" max="200" style="width:110px;">
       </div>
+
     </div>
     <div class="modal-footer">
-      <button class="btn btn-ghost" style="color:var(--muted);border-color:var(--rule);" onclick="closeSettings()">Cancel</button>
+      <button class="btn btn-ghost" onclick="closeSettings()">Cancel</button>
       <button class="btn btn-primary" onclick="saveSettings()">Save & Refresh</button>
     </div>
   </div>
@@ -814,10 +1017,10 @@
 <div class="toast" id="toast"></div>
 
 <!-- Google Sign-In SDK -->
-<script src="https://accounts.google.com/gsi/client"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <script>
-// ─── STATE ──────────────────────────────────────────────────────────────────
+// ─── STATE ────────────────────────────────────────────────────────────────────
 let state = {
   accessToken: null,
   emails: [],
@@ -832,14 +1035,53 @@ let state = {
   isDemo: false
 };
 
-// ─── INIT ────────────────────────────────────────────────────────────────────
+// ─── ANTHROPIC API ────────────────────────────────────────────────────────────
+const ANTHROPIC_API = 'https://api.anthropic.com/v1/messages';
+const CLAUDE_MODEL  = 'claude-sonnet-4-20250514';
+
+async function callClaude({ prompt, maxTokens = 400, systemPrompt }) {
+  const apiKey = state.settings.anthropicKey;
+  if (!apiKey) throw new Error('No Anthropic API key set. Add it in Settings.');
+
+  const body = {
+    model: CLAUDE_MODEL,
+    max_tokens: maxTokens,
+    messages: [{ role: 'user', content: prompt }]
+  };
+  if (systemPrompt) body.system = systemPrompt;
+
+  const res = await fetch(ANTHROPIC_API, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok) {
+    let errMsg = `API error ${res.status}`;
+    try {
+      const errData = await res.json();
+      errMsg = errData?.error?.message || errMsg;
+    } catch(_) {}
+    throw new Error(errMsg);
+  }
+
+  const data = await res.json();
+  const text = data?.content?.find(b => b.type === 'text')?.text;
+  if (!text) throw new Error('Empty response from Claude');
+  return text;
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  // Set date
   const now = new Date();
   document.getElementById('masthead-date').textContent =
     now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
-  // Load saved settings
   try {
     const saved = JSON.parse(localStorage.getItem('md_settings') || '{}');
     Object.assign(state.settings, saved);
@@ -847,7 +1089,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (saved.anthropicKey) document.getElementById('anthropic-key-input').value = saved.anthropicKey;
   } catch(e) {}
 
-  // Auto-restore session
   const savedToken = localStorage.getItem('md_token');
   if (savedToken) {
     state.accessToken = savedToken;
@@ -856,20 +1097,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ─── AUTH ─────────────────────────────────────────────────────────────────────
+// ─── STEPS TOGGLE ─────────────────────────────────────────────────────────────
+function toggleSteps() {
+  const toggle = document.getElementById('steps-toggle');
+  const body   = document.getElementById('steps-body');
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// ─── AUTH ──────────────────────────────────────────────────────────────────────
 function startSignIn() {
-  if (typeof google === 'undefined') { showToast('Google SDK not loaded — check your internet connection and refresh'); return; }
-  const clientId = document.getElementById('client-id-input').value.trim();
+  if (typeof google === 'undefined') {
+    showToast('Google SDK not loaded — check your internet connection', true);
+    return;
+  }
+  const clientId     = document.getElementById('client-id-input').value.trim();
   const anthropicKey = document.getElementById('anthropic-key-input').value.trim();
 
-  if (!clientId) { showToast('Please enter your Google Client ID'); return; }
+  if (!clientId) { showToast('Please enter your Google Client ID', true); return; }
 
-  // Save inputs
-  const settings = JSON.parse(localStorage.getItem('md_settings') || '{}');
-  settings.clientId = clientId;
-  if (anthropicKey) settings.anthropicKey = anthropicKey;
-  localStorage.setItem('md_settings', JSON.stringify(settings));
-  state.settings.anthropicKey = anthropicKey;
+  const saved = JSON.parse(localStorage.getItem('md_settings') || '{}');
+  saved.clientId = clientId;
+  if (anthropicKey) { saved.anthropicKey = anthropicKey; state.settings.anthropicKey = anthropicKey; }
+  localStorage.setItem('md_settings', JSON.stringify(saved));
 
   const client = google.accounts.oauth2.initTokenClient({
     client_id: clientId,
@@ -881,7 +1131,7 @@ function startSignIn() {
         showDashboard();
         refreshEmails();
       } else {
-        showToast('Sign-in failed. Check your Client ID.');
+        showToast('Sign-in failed — check your Client ID', true);
       }
     }
   });
@@ -898,7 +1148,7 @@ function signOut() {
   showToast('Signed out');
 }
 
-// ─── DEMO MODE ───────────────────────────────────────────────────────────────
+// ─── DEMO ─────────────────────────────────────────────────────────────────────
 function loadDemo() {
   state.isDemo = true;
   state.emails = generateDemoEmails();
@@ -911,58 +1161,58 @@ function loadDemo() {
 function generateDemoEmails() {
   return [
     {
-      id: 'demo1', threadId: 'thread1',
-      from: 'Sarah Chen <sarah@acmecorp.com>', fromName: 'Sarah Chen',
-      subject: 'Q3 budget review — action needed by Friday',
-      snippet: 'Hi, I wanted to follow up on the Q3 budget figures we discussed last week. We need sign-off before the board meeting.',
-      body: 'Hi,\n\nI wanted to follow up on the Q3 budget figures we discussed last week. We need sign-off before the board meeting on Friday at 2pm.\n\nKey items requiring approval:\n- Marketing overspend: $42,000\n- New hire headcount (2 engineers)\n- Software license renewals\n\nCan you review the attached spreadsheet and reply with your approval or any concerns?\n\nBest,\nSarah',
-      date: new Date(Date.now() - 2*3600000),
-      isUnread: true, category: 'reply', isWatched: true, labels: ['INBOX', 'IMPORTANT']
+      id:'demo1', threadId:'thread1',
+      from:'Sarah Chen <sarah@acmecorp.com>', fromName:'Sarah Chen',
+      subject:'Q3 budget review — action needed by Friday',
+      snippet:'Hi, I wanted to follow up on the Q3 budget figures. We need sign-off before the board meeting.',
+      body:'Hi,\n\nI wanted to follow up on the Q3 budget figures we discussed last week. We need sign-off before the board meeting on Friday at 2pm.\n\nKey items requiring approval:\n- Marketing overspend: $42,000\n- New hire headcount (2 engineers)\n- Software license renewals\n\nCan you review and reply with your approval or any concerns?\n\nBest,\nSarah',
+      date: new Date(Date.now()-2*3600000),
+      isUnread:true, category:'reply', isWatched:true, labels:['INBOX','IMPORTANT']
     },
     {
-      id: 'demo2', threadId: 'thread2',
-      from: 'GitHub <noreply@github.com>', fromName: 'GitHub',
-      subject: '[acme/webapp] PR #234: Add dark mode support',
-      snippet: 'A new pull request has been opened by devteam. Review requested.',
-      body: 'A new pull request has been opened.\n\nTitle: Add dark mode support\nBranch: feature/dark-mode → main\nReview requested from you\n\nView on GitHub →',
-      date: new Date(Date.now() - 4*3600000),
-      isUnread: true, category: 'reply', isWatched: false, labels: ['INBOX']
+      id:'demo2', threadId:'thread2',
+      from:'GitHub <noreply@github.com>', fromName:'GitHub',
+      subject:'[acme/webapp] PR #234: Add dark mode support',
+      snippet:'A new pull request has been opened by devteam. Review requested.',
+      body:'A new pull request has been opened.\n\nTitle: Add dark mode support\nBranch: feature/dark-mode → main\nReview requested from you\n\nView on GitHub →',
+      date: new Date(Date.now()-4*3600000),
+      isUnread:true, category:'reply', isWatched:false, labels:['INBOX']
     },
     {
-      id: 'demo3', threadId: 'thread3',
-      from: 'Marcus Johnson <marcus@partner.io>', fromName: 'Marcus Johnson',
-      subject: 'Partnership proposal — revised terms attached',
-      snippet: 'Thanks for the call yesterday. I\'ve revised the partnership agreement based on your feedback.',
-      body: 'Thanks for the call yesterday. I\'ve revised the partnership agreement based on your feedback and attached the updated document.\n\nMain changes:\n- Revenue share adjusted to 70/30\n- Exclusivity clause removed\n- 6-month trial period added\n\nLet me know if you\'d like to schedule a follow-up call this week.',
-      date: new Date(Date.now() - 6*3600000),
-      isUnread: true, category: 'read', isWatched: false, labels: ['INBOX', 'IMPORTANT']
+      id:'demo3', threadId:'thread3',
+      from:'Marcus Johnson <marcus@partner.io>', fromName:'Marcus Johnson',
+      subject:'Partnership proposal — revised terms attached',
+      snippet:"Thanks for the call yesterday. I've revised the partnership agreement based on your feedback.",
+      body:"Thanks for the call yesterday. I've revised the partnership agreement based on your feedback.\n\nMain changes:\n- Revenue share adjusted to 70/30\n- Exclusivity clause removed\n- 6-month trial period added\n\nLet me know if you'd like to schedule a follow-up call this week.",
+      date: new Date(Date.now()-6*3600000),
+      isUnread:true, category:'read', isWatched:false, labels:['INBOX','IMPORTANT']
     },
     {
-      id: 'demo4', threadId: 'thread4',
-      from: 'Stripe <notifications@stripe.com>', fromName: 'Stripe',
-      subject: 'Your invoice for $2,840 is ready',
-      snippet: 'Invoice #INV-2024-0934 for $2,840.00 is due on December 15.',
-      body: 'Invoice #INV-2024-0934\nAmount: $2,840.00\nDue: December 15, 2024\n\nView and pay invoice →',
-      date: new Date(Date.now() - 8*3600000),
-      isUnread: true, category: 'read', isWatched: false, labels: ['INBOX']
+      id:'demo4', threadId:'thread4',
+      from:'Stripe <notifications@stripe.com>', fromName:'Stripe',
+      subject:'Your invoice for $2,840 is ready',
+      snippet:'Invoice #INV-2024-0934 for $2,840.00 is due on December 15.',
+      body:'Invoice #INV-2024-0934\nAmount: $2,840.00\nDue: December 15, 2024\n\nView and pay invoice →',
+      date: new Date(Date.now()-8*3600000),
+      isUnread:true, category:'read', isWatched:false, labels:['INBOX']
     },
     {
-      id: 'demo5', threadId: 'thread5',
-      from: 'Team Updates <updates@acmecorp.com>', fromName: 'Team Updates',
-      subject: 'Weekly engineering standup notes — Nov 25',
-      snippet: 'Notes from today\'s standup. Sprint velocity: 42 points. 3 items blocked.',
-      body: 'Standup notes for Nov 25:\n\nCompleted: User auth refactor, API rate limiting\nIn Progress: Dark mode, Performance audit\nBlocked: Waiting on design assets for onboarding flow\n\nSprint velocity: 42 points (target: 40)\nNext standup: Monday 9am',
-      date: new Date(Date.now() - 24*3600000),
-      isUnread: false, category: 'fyi', isWatched: false, labels: ['INBOX']
+      id:'demo5', threadId:'thread5',
+      from:'Team Updates <updates@acmecorp.com>', fromName:'Team Updates',
+      subject:'Weekly engineering standup notes — Nov 25',
+      snippet:"Notes from today's standup. Sprint velocity: 42 points. 3 items blocked.",
+      body:"Standup notes for Nov 25:\n\nCompleted: User auth refactor, API rate limiting\nIn Progress: Dark mode, Performance audit\nBlocked: Waiting on design assets for onboarding flow\n\nSprint velocity: 42 points (target: 40)\nNext standup: Monday 9am",
+      date: new Date(Date.now()-24*3600000),
+      isUnread:false, category:'fyi', isWatched:false, labels:['INBOX']
     },
     {
-      id: 'demo6', threadId: 'thread6',
-      from: 'Lena Park <lena@designco.com>', fromName: 'Lena Park',
-      subject: 'Final brand assets — download link inside',
-      snippet: 'The final brand guide and asset pack are ready for download. Link expires in 7 days.',
-      body: 'Hi,\n\nThe final brand assets are ready! Everything is packaged at the link below.\n\nIncludes: Logo files (SVG, PNG, dark/light), Color palette, Typography guide, Icon set\n\nDownload link (expires Dec 2): [link]\n\nLet me know if you need any adjustments.',
-      date: new Date(Date.now() - 30*3600000),
-      isUnread: true, category: 'read', isWatched: false, labels: ['INBOX', 'IMPORTANT']
+      id:'demo6', threadId:'thread6',
+      from:'Lena Park <lena@designco.com>', fromName:'Lena Park',
+      subject:'Final brand assets — download link inside',
+      snippet:'The final brand guide and asset pack are ready for download. Link expires in 7 days.',
+      body:'Hi,\n\nThe final brand assets are ready!\n\nIncludes: Logo files (SVG, PNG), Color palette, Typography guide, Icon set\n\nDownload link (expires Dec 2): [link]\n\nLet me know if you need any adjustments.',
+      date: new Date(Date.now()-30*3600000),
+      isUnread:true, category:'read', isWatched:false, labels:['INBOX','IMPORTANT']
     },
   ];
 }
@@ -983,23 +1233,19 @@ async function refreshEmails() {
       { headers: { Authorization: `Bearer ${state.accessToken}` } }
     );
 
-    if (resp.status === 401) { showToast('Session expired — please sign in again'); signOut(); return; }
-    if (!resp.ok) throw new Error(`Gmail API error ${resp.status}`);
+    if (resp.status === 401) { showToast('Session expired — please sign in again', true); signOut(); return; }
+    if (!resp.ok) throw new Error(`Gmail API ${resp.status}`);
 
     const data = await resp.json();
     const messages = data.messages || [];
 
-    // Fetch each message in parallel (batched)
-    const emails = await Promise.all(
-      messages.map(m => fetchMessage(m.id))
-    );
-
+    const emails = await Promise.all(messages.map(m => fetchMessage(m.id)));
     state.emails = emails.filter(Boolean).map(parseEmail);
     renderEmails();
     updateStats();
     showToast(`Loaded ${state.emails.length} emails`);
   } catch(e) {
-    showToast('Error fetching emails: ' + e.message);
+    showToast('Error: ' + e.message, true);
     console.error(e);
   } finally {
     setLoading(false);
@@ -1027,46 +1273,36 @@ function parseEmail(msg) {
   const dateStr = get('Date');
   const date = dateStr ? new Date(dateStr) : new Date();
 
-  // Extract body
   let body = '';
   const extractBody = (part) => {
     if (part.mimeType === 'text/plain' && part.body?.data) {
-      body = atob(part.body.data.replace(/-/g, '+').replace(/_/g, '/'));
+      try { body = atob(part.body.data.replace(/-/g, '+').replace(/_/g, '/')); } catch(_) {}
     }
     if (part.parts) part.parts.forEach(extractBody);
   };
   extractBody(msg.payload);
 
-  const labels = msg.labelIds || [];
-  const isUnread = labels.includes('UNREAD');
-  const isImportant = labels.includes('IMPORTANT') || labels.includes('STARRED');
-
-  // Categorize
-  const category = categorizeEmail(from, subject, body, labels, isUnread);
+  const labels    = msg.labelIds || [];
+  const isUnread  = labels.includes('UNREAD');
+  const category  = categorizeEmail(from, subject, body, labels, isUnread);
   const isWatched = isWatchedEmail(from, subject, body);
 
   return {
-    id: msg.id,
-    threadId: msg.threadId,
-    from, fromName,
-    subject,
+    id: msg.id, threadId: msg.threadId,
+    from, fromName, subject,
     snippet: msg.snippet || '',
     body: body.slice(0, 2000),
-    date,
-    isUnread,
-    isImportant,
-    category,
-    isWatched,
-    labels,
+    date, isUnread,
+    isImportant: labels.includes('IMPORTANT') || labels.includes('STARRED'),
+    category, isWatched, labels,
     aiSummary: null
   };
 }
 
 function categorizeEmail(from, subject, body, labels, isUnread) {
   const text = (subject + ' ' + body).toLowerCase();
-  const replyWords = ['action required', 'please review', 'approval needed', 'your input', 'can you', 'could you', 'please respond', 'deadline', 'urgent', 'asap', 'lgtm?', 'sign-off'];
-  const fyiWords = ['fyi', 'for your information', 'looping you in', 'keeping you in the loop', 'cc:', 'heads up', 'just wanted to share'];
-
+  const replyWords = ['action required','please review','approval needed','your input','can you','could you','please respond','deadline','urgent','asap','lgtm?','sign-off','reply'];
+  const fyiWords   = ['fyi','for your information','looping you in','keeping you in the loop','heads up','just wanted to share'];
   if (replyWords.some(w => text.includes(w))) return 'reply';
   if (fyiWords.some(w => text.includes(w))) return 'fyi';
   if (!isUnread) return 'fyi';
@@ -1077,18 +1313,17 @@ function isWatchedEmail(from, subject, body) {
   const { watchedSenders, keywords } = state.settings;
   if (watchedSenders.some(s => from.toLowerCase().includes(s.toLowerCase()))) return true;
   const text = (subject + ' ' + body).toLowerCase();
-  if (keywords.some(k => text.includes(k.toLowerCase()))) return true;
-  return false;
+  return keywords.some(k => text.includes(k.toLowerCase()));
 }
 
 // ─── RENDERING ────────────────────────────────────────────────────────────────
 function getFilteredEmails() {
   const f = state.currentFilter;
   return state.emails.filter(e => {
-    if (f === 'all') return true;
-    if (f === 'reply') return e.category === 'reply';
-    if (f === 'read') return e.category === 'read' && e.isUnread;
-    if (f === 'fyi') return e.category === 'fyi';
+    if (f === 'all')     return true;
+    if (f === 'reply')   return e.category === 'reply';
+    if (f === 'read')    return e.category === 'read' && e.isUnread;
+    if (f === 'fyi')     return e.category === 'fyi';
     if (f === 'watched') return e.isWatched;
     return true;
   }).sort((a, b) => {
@@ -1102,7 +1337,7 @@ function getFilteredEmails() {
 
 function renderEmails() {
   const container = document.getElementById('email-list');
-  const emails = getFilteredEmails();
+  const emails    = getFilteredEmails();
 
   if (emails.length === 0) {
     container.innerHTML = `
@@ -1116,34 +1351,40 @@ function renderEmails() {
 
   container.innerHTML = emails.map(e => renderEmailItem(e)).join('');
 
-  // Show AI digest button if key is set
-  const hasKey = state.settings.anthropicKey || document.getElementById('anthropic-key-input')?.value;
+  const hasKey = !!state.settings.anthropicKey;
   document.getElementById('digest-btn').style.display = hasKey ? 'inline-flex' : 'none';
 }
 
 function renderEmailItem(email) {
   const time = formatTime(email.date);
   let tags = '';
-  if (email.category === 'reply') tags += `<span class="tag tag-reply">↩ Reply</span>`;
-  else if (email.category === 'read') tags += `<span class="tag tag-read">👁 Read</span>`;
-  else tags += `<span class="tag tag-fyi">💡 FYI</span>`;
+  if (email.category === 'reply')      tags += `<span class="tag tag-reply">↩ Reply</span>`;
+  else if (email.category === 'read')  tags += `<span class="tag tag-read">👁 Read</span>`;
+  else                                 tags += `<span class="tag tag-fyi">💡 FYI</span>`;
   if (email.isWatched) tags += `<span class="tag tag-watched">⭐ Watched</span>`;
 
   const summaryHTML = email.aiSummary
     ? `<div class="ai-summary">
         <div class="ai-summary-label">✦ AI Summary</div>
-        <div class="ai-summary-text">${email.aiSummary}</div>
+        <div class="ai-summary-text">${escapeHtml(email.aiSummary)}</div>
         <div class="ai-summary-actions">
           ${email.category === 'reply' ? `<button class="btn btn-primary btn-sm" onclick="openGmail('${email.threadId}')">Reply in Gmail →</button>` : ''}
-          <button class="btn btn-ghost btn-sm" style="color:var(--muted);border-color:var(--rule);" onclick="openGmail('${email.threadId}')">Open in Gmail</button>
+          <button class="btn btn-ghost btn-sm" onclick="openGmail('${email.threadId}')">Open in Gmail</button>
         </div>
       </div>`
-    : `<div class="ai-summary" id="summary-placeholder-${email.id}">
-        <div class="ai-summary-label">✦ AI Summary <span class="digest-spinner" id="spinner-${email.id}" style="display:none;"><span class="spin">◌</span> Generating…</span></div>
-        <div class="ai-summary-text" style="color:var(--muted);font-style:italic;">Click to generate an AI summary of this email.</div>
+    : `<div class="ai-summary" id="summary-box-${email.id}">
+        <div class="ai-summary-label">
+          ✦ AI Summary
+          <span class="digest-spinner" id="spinner-${email.id}" style="display:none;"><span class="spin">◌</span> Generating…</span>
+        </div>
+        <div class="ai-summary-text" style="color:var(--muted-soft);font-style:italic;font-size:12.5px;">
+          ${state.settings.anthropicKey ? 'Click Summarize to get an AI summary of this email.' : 'Add an Anthropic API key in Settings to enable AI summaries.'}
+        </div>
         <div class="ai-summary-actions">
-          <button class="btn btn-ink btn-sm" onclick="summarizeEmail(event, '${email.id}')">✦ Summarize</button>
-          <button class="btn btn-ghost btn-sm" style="color:var(--muted);border-color:var(--rule);" onclick="openGmail('${email.threadId}')">Open in Gmail</button>
+          ${state.settings.anthropicKey
+            ? `<button class="btn btn-ink btn-sm" onclick="summarizeEmail(event,'${email.id}')">✦ Summarize</button>`
+            : `<button class="btn btn-ghost btn-sm" onclick="openSettings()">Add API Key</button>`}
+          <button class="btn btn-ghost btn-sm" onclick="openGmail('${email.threadId}')">Open in Gmail</button>
         </div>
       </div>`;
 
@@ -1172,153 +1413,121 @@ function renderEmailItem(email) {
 }
 
 function toggleEmail(id) {
-  const item = document.getElementById(`item-${id}`);
-  item.classList.toggle('expanded');
+  document.getElementById(`item-${id}`)?.classList.toggle('expanded');
 }
 
 function openGmail(threadId) {
   window.open(`https://mail.google.com/mail/u/0/#inbox/${threadId}`, '_blank');
 }
 
-// ─── AI SUMMARY ──────────────────────────────────────────────────────────────
+// ─── AI SUMMARY ───────────────────────────────────────────────────────────────
 async function summarizeEmail(event, emailId) {
   event.stopPropagation();
-  const apiKey = state.settings.anthropicKey || document.getElementById('anthropic-key-input')?.value;
-  if (!apiKey) { showToast('Add your Anthropic API key in Settings'); openSettings(); return; }
+
+  if (!state.settings.anthropicKey) {
+    showToast('Add your Anthropic API key in Settings', true);
+    openSettings();
+    return;
+  }
 
   const email = state.emails.find(e => e.id === emailId);
   if (!email) return;
 
-  // Show spinner
   const spinner = document.getElementById(`spinner-${emailId}`);
   if (spinner) spinner.style.display = 'inline-flex';
-  const placeholder = document.getElementById(`summary-placeholder-${emailId}`);
+
+  // Disable the summarize button
+  const box = document.getElementById(`summary-box-${emailId}`);
+  if (box) box.querySelector('.btn')?.setAttribute('disabled', 'true');
 
   try {
-    const prompt = `You are an email assistant. Analyze this email and provide a concise, actionable summary.
+    const summary = await callClaude({
+      maxTokens: 320,
+      systemPrompt: 'You are a concise executive email assistant. Provide clear, direct summaries with no filler phrases.',
+      prompt: `Analyze this email and respond with a 2–4 sentence summary covering:
+1. What the email is about
+2. Any action required (with deadline if mentioned)
+3. Urgency level (if notable)
 
 From: ${email.from}
 Subject: ${email.subject}
 Date: ${email.date.toLocaleString()}
 
-Body:
-${email.body || email.snippet}
-
-Respond with a 2-4 sentence summary that:
-1. States what this email is about
-2. Highlights any action required (with deadline if mentioned)
-3. Notes urgency level
-
-Be direct and concrete. No filler phrases.`;
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 300,
-        messages: [{ role: 'user', content: prompt }]
-      })
+${email.body || email.snippet}`
     });
 
-    if (!response.ok) {
-      const err = await response.json();
-      throw new Error(err.error?.message || `API error ${response.status}`);
-    }
-
-    const data = await response.json();
-    const summary = data.content?.[0]?.text || 'Could not generate summary.';
-
-    // Update email object
     email.aiSummary = summary;
 
-    // Re-render just this email
-    const item = document.getElementById(`item-${emailId}`);
-    const wasExpanded = item.classList.contains('expanded');
-    item.outerHTML = renderEmailItem(email);
-    if (wasExpanded) {
+    const item      = document.getElementById(`item-${emailId}`);
+    const wasExpanded = item?.classList.contains('expanded');
+    if (item) {
+      item.outerHTML = renderEmailItem(email);
       const newItem = document.getElementById(`item-${emailId}`);
-      if (newItem) newItem.classList.add('expanded');
+      if (newItem && wasExpanded) newItem.classList.add('expanded');
     }
-
     showToast('Summary generated');
   } catch(e) {
     if (spinner) spinner.style.display = 'none';
-    showToast('Summary failed: ' + e.message);
+    if (box) box.querySelector('.btn')?.removeAttribute('disabled');
+    showToast('Summary failed: ' + e.message, true);
     console.error(e);
   }
 }
 
-// ─── AI DIGEST ───────────────────────────────────────────────────────────────
+// ─── AI DIGEST ────────────────────────────────────────────────────────────────
 async function generateDigest() {
-  const apiKey = state.settings.anthropicKey || document.getElementById('anthropic-key-input')?.value;
-  if (!apiKey) { showToast('Add your Anthropic API key in Settings'); openSettings(); return; }
+  if (!state.settings.anthropicKey) {
+    showToast('Add your Anthropic API key in Settings', true);
+    openSettings();
+    return;
+  }
   if (state.emails.length === 0) { showToast('No emails loaded'); return; }
 
   const section = document.getElementById('digest-section');
-  const banner = document.getElementById('digest-banner');
-  const text = document.getElementById('digest-text');
+  const banner  = document.getElementById('digest-banner');
+  const textEl  = document.getElementById('digest-text');
 
   section.style.display = 'block';
   banner.classList.add('loading');
-  text.innerHTML = '<span class="spin">◌</span> Generating your morning digest…';
+  textEl.innerHTML = '<span class="spin">◌</span> Generating your morning digest…';
 
   const topEmails = getFilteredEmails().slice(0, 15);
   const emailSummaries = topEmails.map((e, i) =>
-    `${i+1}. From: ${e.fromName} | Subject: ${e.subject} | Category: ${e.category} | ${e.snippet}`
+    `${i+1}. From: ${e.fromName} | Subject: ${e.subject} | Category: ${e.category} | Snippet: ${e.snippet}`
   ).join('\n');
 
-  const prompt = `You are a sharp executive assistant writing a morning email briefing.
-
-Here are the most important emails from today's inbox:
+  try {
+    const digest = await callClaude({
+      maxTokens: 450,
+      systemPrompt: 'You are a sharp executive assistant writing a concise morning email briefing. Write in direct, professional prose — no bullet points.',
+      prompt: `Here are the most important emails from today's inbox:
 
 ${emailSummaries}
 
-Write a concise morning digest in 3-5 sentences that:
+Write a concise morning digest in 3–5 sentences that:
 - Leads with the single most urgent/important item
-- Groups any related themes (e.g., "3 items need your reply today")
-- Notes any deadlines mentioned
-- Ends with a count: "X items need your attention"
+- Groups related themes (e.g., "3 items need your reply today")
+- Notes any deadlines
+- Ends with: "X items need your attention today"
 
-Write in a direct, professional tone. No bullet points — flowing prose only.`;
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 400,
-        messages: [{ role: 'user', content: prompt }]
-      })
+Flowing prose only. Be concrete and direct.`
     });
 
-    if (!response.ok) throw new Error(`API error ${response.status}`);
-    const data = await response.json();
-    const digest = data.content?.[0]?.text || 'Could not generate digest.';
-
     state.digestText = digest;
-    text.textContent = digest;
+    textEl.textContent = digest;
     banner.classList.remove('loading');
   } catch(e) {
-    text.textContent = 'Failed to generate digest: ' + e.message;
+    textEl.textContent = 'Failed to generate digest: ' + e.message;
     banner.classList.remove('loading');
+    showToast(e.message, true);
   }
 }
 
 function copyDigest() {
   if (state.digestText) {
-    navigator.clipboard.writeText(state.digestText).then(() => showToast('Digest copied to clipboard'));
+    navigator.clipboard.writeText(state.digestText)
+      .then(() => showToast('Digest copied to clipboard'))
+      .catch(() => showToast('Copy failed', true));
   }
 }
 
@@ -1328,22 +1537,22 @@ function closeDigest() {
 
 // ─── STATS & FILTERS ─────────────────────────────────────────────────────────
 function updateStats() {
-  const emails = state.emails;
-  const reply = emails.filter(e => e.category === 'reply').length;
-  const read = emails.filter(e => e.category === 'read' && e.isUnread).length;
-  const fyi = emails.filter(e => e.category === 'fyi').length;
+  const emails  = state.emails;
+  const reply   = emails.filter(e => e.category === 'reply').length;
+  const read    = emails.filter(e => e.category === 'read' && e.isUnread).length;
+  const fyi     = emails.filter(e => e.category === 'fyi').length;
   const watched = emails.filter(e => e.isWatched).length;
-  const unread = emails.filter(e => e.isUnread).length;
+  const unread  = emails.filter(e => e.isUnread).length;
 
-  document.getElementById('stat-total').textContent = emails.length;
+  document.getElementById('stat-total').textContent  = emails.length;
   document.getElementById('stat-unread').textContent = unread;
-  document.getElementById('stat-reply').textContent = reply;
-  document.getElementById('stat-fyi').textContent = fyi;
+  document.getElementById('stat-reply').textContent  = reply;
+  document.getElementById('stat-fyi').textContent    = fyi;
 
-  document.getElementById('nav-all').textContent = emails.length;
-  document.getElementById('nav-reply').textContent = reply;
-  document.getElementById('nav-read').textContent = read;
-  document.getElementById('nav-fyi').textContent = fyi;
+  document.getElementById('nav-all').textContent     = emails.length;
+  document.getElementById('nav-reply').textContent   = reply;
+  document.getElementById('nav-read').textContent    = read;
+  document.getElementById('nav-fyi').textContent     = fyi;
   document.getElementById('nav-watched').textContent = watched;
 }
 
@@ -1352,18 +1561,20 @@ function setFilter(filter, el) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   el.classList.add('active');
 
-  const titles = { all: 'All Important', reply: 'Needs Reply', read: 'Needs Reading', fyi: 'FYI / CC\'d', watched: 'Watched Senders' };
+  const titles = { all:'All Important', reply:'Needs Reply', read:'Needs Reading', fyi:"FYI / CC'd", watched:'Watched Senders' };
   document.getElementById('main-title').textContent = titles[filter];
   renderEmails();
 }
 
-// ─── SETTINGS ────────────────────────────────────────────────────────────────
+// ─── SETTINGS ─────────────────────────────────────────────────────────────────
 function openSettings() {
   const s = state.settings;
-  document.getElementById('settings-anthropic-key').value = s.anthropicKey || '';
+  const keyInput = document.getElementById('settings-anthropic-key');
+  keyInput.value = s.anthropicKey || '';
   document.getElementById('settings-max-emails').value = s.maxEmails || 50;
   renderTagList('sender-tags', s.watchedSenders, 'sender');
   renderTagList('keyword-tags', s.keywords, 'keyword');
+  updateApiStatusBadge(s.anthropicKey);
   document.getElementById('settings-modal').classList.add('open');
 }
 
@@ -1371,10 +1582,29 @@ function closeSettings() {
   document.getElementById('settings-modal').classList.remove('open');
 }
 
+function updateApiStatusPreview(val) {
+  updateApiStatusBadge(val.trim());
+}
+
+function updateApiStatusBadge(key) {
+  const badge = document.getElementById('api-status-badge');
+  const text  = document.getElementById('api-status-text');
+  if (key && key.startsWith('sk-ant')) {
+    badge.className = 'api-status connected';
+    text.textContent = 'Connected';
+  } else if (key) {
+    badge.className = 'api-status disconnected';
+    text.textContent = 'Check key';
+  } else {
+    badge.className = 'api-status disconnected';
+    text.textContent = 'Not set';
+  }
+}
+
 function saveSettings() {
   const s = state.settings;
   s.anthropicKey = document.getElementById('settings-anthropic-key').value.trim();
-  s.maxEmails = parseInt(document.getElementById('settings-max-emails').value) || 50;
+  s.maxEmails    = parseInt(document.getElementById('settings-max-emails').value) || 50;
 
   const saved = JSON.parse(localStorage.getItem('md_settings') || '{}');
   Object.assign(saved, { anthropicKey: s.anthropicKey, maxEmails: s.maxEmails, watchedSenders: s.watchedSenders, keywords: s.keywords });
@@ -1388,19 +1618,21 @@ function saveSettings() {
 function renderTagList(containerId, items, type) {
   const container = document.getElementById(containerId);
   container.innerHTML = items.map((item, i) =>
-    `<div class="tag-item">${escapeHtml(item)}<button class="tag-remove" onclick="removeTag('${type}', ${i})">×</button></div>`
+    `<div class="tag-item">${escapeHtml(item)}<button class="tag-remove" onclick="removeTag('${type}',${i})">×</button></div>`
   ).join('');
 }
 
 function removeTag(type, index) {
   if (type === 'sender') state.settings.watchedSenders.splice(index, 1);
   else state.settings.keywords.splice(index, 1);
-  openSettings(); // re-render
+  renderTagList(type === 'sender' ? 'sender-tags' : 'keyword-tags',
+                type === 'sender' ? state.settings.watchedSenders : state.settings.keywords,
+                type);
 }
 
 function addSender() {
   const input = document.getElementById('sender-input');
-  const val = input.value.trim();
+  const val   = input.value.trim();
   if (val && !state.settings.watchedSenders.includes(val)) {
     state.settings.watchedSenders.push(val);
     renderTagList('sender-tags', state.settings.watchedSenders, 'sender');
@@ -1410,7 +1642,7 @@ function addSender() {
 
 function addKeyword() {
   const input = document.getElementById('keyword-input');
-  const val = input.value.trim().toLowerCase();
+  const val   = input.value.trim().toLowerCase();
   if (val && !state.settings.keywords.includes(val)) {
     state.settings.keywords.push(val);
     renderTagList('keyword-tags', state.settings.keywords, 'keyword');
@@ -1418,7 +1650,7 @@ function addKeyword() {
   }
 }
 
-// ─── UI HELPERS ──────────────────────────────────────────────────────────────
+// ─── UI HELPERS ───────────────────────────────────────────────────────────────
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const el = document.getElementById(id);
@@ -1433,34 +1665,30 @@ function showDashboard() {
 
 function updateMastheadActions(loggedIn) {
   const el = document.getElementById('masthead-actions');
-  if (loggedIn) {
-    el.innerHTML = `
-      <button class="btn btn-ghost btn-sm" onclick="openSettings()">⚙ Settings</button>
-      <button class="btn btn-ghost btn-sm" onclick="refreshEmails()">↻ Refresh</button>
-    `;
-  } else {
-    el.innerHTML = '';
-  }
+  el.innerHTML = loggedIn
+    ? `<button class="btn btn-ghost-light btn-sm" onclick="openSettings()">⚙ Settings</button>
+       <button class="btn btn-ghost-light btn-sm" onclick="refreshEmails()">↻ Refresh</button>`
+    : '';
 }
 
 function setLoading(on) {
   document.getElementById('loading-bar').style.display = on ? 'block' : 'none';
 }
 
-function showToast(msg) {
+function showToast(msg, isError = false) {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
-  toast.classList.add('show');
+  toast.className   = 'toast show' + (isError ? ' error' : '');
   clearTimeout(toast._t);
-  toast._t = setTimeout(() => toast.classList.remove('show'), 3000);
+  toast._t = setTimeout(() => toast.classList.remove('show'), 3500);
 }
 
 function formatTime(date) {
-  const now = new Date();
+  const now  = new Date();
   const diff = now - date;
-  if (diff < 3600000) return `${Math.floor(diff/60000)}m ago`;
-  if (diff < 86400000) return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  if (diff < 3600000)  return `${Math.floor(diff/60000)}m ago`;
+  if (diff < 86400000) return date.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+  return date.toLocaleDateString('en-US', { month:'short', day:'numeric' });
 }
 
 function escapeHtml(str) {
