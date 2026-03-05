@@ -848,7 +848,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch(e) {}
 
   // Auto-restore session
-  const savedToken = sessionStorage.getItem('md_token');
+  const savedToken = localStorage.getItem('md_token');
   if (savedToken) {
     state.accessToken = savedToken;
     showDashboard();
@@ -877,7 +877,7 @@ function startSignIn() {
     callback: (response) => {
       if (response.access_token) {
         state.accessToken = response.access_token;
-        sessionStorage.setItem('md_token', response.access_token);
+        localStorage.setItem('md_token', response.access_token);
         showDashboard();
         refreshEmails();
       } else {
@@ -892,7 +892,7 @@ function signOut() {
   state.accessToken = null;
   state.emails = [];
   state.isDemo = false;
-  sessionStorage.removeItem('md_token');
+  localStorage.removeItem('md_token');
   showPage('landing');
   updateMastheadActions(false);
   showToast('Signed out');
